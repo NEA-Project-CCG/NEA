@@ -1,5 +1,4 @@
 from random import randint
-#import Buffs
 
 #all of the parameters for damage calculation
 #specilised calculator that does not include damage variance
@@ -220,10 +219,83 @@ def Damage_calculator(damage: int, offense: int, ap: int, crit_chance: int, crit
 
     return damage
 
+def Debuff_Calculator(potency: int, tenacity: int, buffs: list[int], debuffs: list[int], evasion: int, accuracy: int, debuffs_to_be_applied: list[int]) -> list[int]:
+    #applies buffs
+    for buff in buffs:
+        #checks if buff is accuracy up
+        if buff == 6:
+            accuracy = round((accuracy * 150) / 100)
 
-if __name__ == "__main__":
-    test_data_1 = [1500, 100, 500, 100, 150, 100, [], [], 100, 0, 0, 0]
+        # checks if buff is evasion up
+        if buff == 7:
+            evasion = round((evasion * 150) / 100)
 
-    result = Damage_calculator(test_data_1[0], test_data_1[1], test_data_1[2], test_data_1[3], test_data_1[4], test_data_1[5], test_data_1[6], test_data_1[7], test_data_1[8], test_data_1[9], test_data_1[10], test_data_1[11])
+        #checks if buff is potency up
+        if buff == 8:
+            potency = round((potency * 150) / 100)
 
-    print(result)
+        #checks if buff is tenacity up
+        if buff == 9:
+            tenacity = round((tenacity * 150) / 100)
+
+
+    #applies debuffs
+    for defbuff in debuffs:
+        #checks if debuff is accuracy down
+        if defbuff == 6:
+            accuracy = round((accuracy * 50) / 100)
+
+        #checks if debuff is evasion down
+        if defbuff == 7:
+            evasion = round((evasion * 50) / 100)
+
+        #checks if debuff is potency down
+        if defbuff == 8:
+            potency = round((potency * 50) / 100)
+
+        #checks if debuff is tenacity down
+        if defbuff == 9:
+            tenacity = round((tenacity * 50) / 100)
+
+
+    #creates accuracy for calculating
+    calc_acc = accuracy - round(evasion / 2)
+    #creates random number to compare against calculated accuracy
+    rand_acc = randint(0, 100)
+    #checks whether it is a hit
+    if calc_acc < rand_acc:
+        print("missed")
+        return debuffs
+
+
+
+    calc_pot = potency - tenacity
+    if calc_pot < 0:
+        return debuffs
+    rand_pot =  randint(0, 100)
+    if calc_pot < rand_pot:
+        print("resisted")
+        return debuffs
+    for application in debuffs_to_be_applied:
+        debuffs.append(application)
+
+    debuffs_set = set(debuffs)
+    debuffs = []
+    for debuff in debuffs_set:
+        debuffs.append(debuff)
+    debuffs.sort()
+
+    return debuffs
+
+
+def Buff_calculator(buffs: list[int], buffs_to_be_applied: list[int]) -> list[int]:
+    for application in buffs_to_be_applied:
+        buffs.append(application)
+
+    buffs_set = set(buffs)
+    buffs = []
+    for buff in buffs_set:
+        buffs.append(buff)
+    buffs.sort()
+
+    return buffs
