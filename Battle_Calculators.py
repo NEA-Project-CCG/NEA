@@ -180,7 +180,6 @@ def Damage_calculator(damage: int, offense: int, ap: int, crit_chance: int, crit
     hit_rand = randint(0, 100)
     if hit_chance < hit_rand:
         damage = 0
-        print("missed")
         return damage
 
     #offense is applied to the damage
@@ -223,7 +222,7 @@ def Debuff_Calculator(potency: int, tenacity: int, buffs: list[int], debuffs: li
     #applies buffs
     for buff in buffs:
         #checks if buff is accuracy up
-        if buff == 6:
+        if buff == 2:
             accuracy = round((accuracy * 150) / 100)
 
         # checks if buff is evasion up
@@ -242,7 +241,7 @@ def Debuff_Calculator(potency: int, tenacity: int, buffs: list[int], debuffs: li
     #applies debuffs
     for defbuff in debuffs:
         #checks if debuff is accuracy down
-        if defbuff == 6:
+        if defbuff == 2:
             accuracy = round((accuracy * 50) / 100)
 
         #checks if debuff is evasion down
@@ -299,3 +298,12 @@ def Buff_calculator(buffs: list[int], buffs_to_be_applied: list[int]) -> list[in
     buffs.sort()
 
     return buffs
+
+
+
+if __name__ == "__main__":
+    test_data_1 = [1500, 100, 500, 100, 150, 100, [], [], 100, 0, 0, 0]
+
+    result = Damage_calculator(test_data_1[0], test_data_1[1], test_data_1[2], test_data_1[3], test_data_1[4], test_data_1[5], test_data_1[6], test_data_1[7], test_data_1[8], test_data_1[9], test_data_1[10], test_data_1[11])
+
+    print(result)
