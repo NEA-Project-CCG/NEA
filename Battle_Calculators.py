@@ -218,7 +218,9 @@ def Damage_calculator(damage: int, offense: int, ap: int, crit_chance: int, crit
 
     return damage
 
-def Debuff_Calculator(potency: int, tenacity: int, buffs: list[int], debuffs: list[int], evasion: int, accuracy: int, debuffs_to_be_applied: list[int]) -> list[int]:
+
+
+def Debuff_Calculator(potency: int, tenacity: int, buffs: list[int], debuffs: list[int], evasion: int, accuracy: int, debuffs_to_be_applied: list[int], rdebuffs) -> list[int]:
     #applies buffs
     for buff in buffs:
         #checks if buff is accuracy up
@@ -263,28 +265,26 @@ def Debuff_Calculator(potency: int, tenacity: int, buffs: list[int], debuffs: li
     rand_acc = randint(0, 100)
     #checks whether it is a hit
     if calc_acc < rand_acc:
-        print("missed")
-        return debuffs
+        return rdebuffs
 
 
 
     calc_pot = potency - tenacity
     if calc_pot < 0:
-        return debuffs
+        return rdebuffs
     rand_pot =  randint(0, 100)
     if calc_pot < rand_pot:
-        print("resisted")
-        return debuffs
+        return rdebuffs
     for application in debuffs_to_be_applied:
-        debuffs.append(application)
+        rdebuffs.append(application)
 
-    debuffs_set = set(debuffs)
-    debuffs = []
-    for debuff in debuffs_set:
-        debuffs.append(debuff)
-    debuffs.sort()
+    rdebuffs_set = set(rdebuffs)
+    rdebuffs = []
+    for debuff in rdebuffs_set:
+        rdebuffs.append(debuff)
+    rdebuffs.sort()
 
-    return debuffs
+    return rdebuffs
 
 
 def Buff_calculator(buffs: list[int], buffs_to_be_applied: list[int]) -> list[int]:
@@ -299,11 +299,34 @@ def Buff_calculator(buffs: list[int], buffs_to_be_applied: list[int]) -> list[in
 
     return buffs
 
+def resolve_damage_buffs(buffs, debuffs, other_buffs, other_debuffs):
+    enemy_calc_buffs = []
+    for buff in buffs:
+        if buff not in [1, 2, 3, 4, 8]:
+            enemy_calc_buffs.append(buff)
 
+    player_calc_buffs = []
+    for buff in other_buffs:
+        if buff in [1, 2, 3, 4, 8]:
+            player_calc_buffs.append(buff)
 
-if __name__ == "__main__":
-    test_data_1 = [1500, 100, 500, 100, 150, 100, [], [], 100, 0, 0, 0]
+    calc_buffs = player_calc_buffs + enemy_calc_buffs
 
-    result = Damage_calculator(test_data_1[0], test_data_1[1], test_data_1[2], test_data_1[3], test_data_1[4], test_data_1[5], test_data_1[6], test_data_1[7], test_data_1[8], test_data_1[9], test_data_1[10], test_data_1[11])
+    enemy_calc_debuffs = []
+    for debuff in debuffs:
+        if debuff not in [1, 2, 3, 4, 8]:
+            enemy_calc_debuffs.append(debuff)
 
-    print(result)
+    player_calc_debuffs = []
+    for debuff in other_debuffs:
+        if debuff in [1, 2, 3, 4, 8]:
+            player_calc_debuffs.append(debuff)
+
+    calc_debuffs = player_calc_debuffs + enemy_calc_debuffs
+
+    for i in range(1, 8):
+        if i in calc_debuffs and i in calc_buffs:
+            calc_buffs.remove(i)
+            calc_buffs.remove(i)
+
+    return [calc_buffs, calc_debuffs]
