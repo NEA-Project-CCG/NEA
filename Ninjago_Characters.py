@@ -1,7 +1,6 @@
 from Battle_Classes import Character
 import sqlite3
 import Battle_Calculators
-from Resolve_Buffs import resolve_damage_buffs
 from random import randint
 
 
@@ -63,7 +62,7 @@ class Kai(Character):
         return self.name
 
     def _basic(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -77,7 +76,7 @@ class Kai(Character):
 
 
     def _special(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs, tenacity):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         new_buffs = []
 
@@ -91,7 +90,7 @@ class Kai(Character):
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -169,7 +168,7 @@ class Zane(Character):
         return self.name
 
     def _basic(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -182,9 +181,13 @@ class Zane(Character):
     def _special(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs, tenacity):
 
 
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
-        new_buffs = []
+        cbuffs = Battle_Calculators.Buff_calculator(calc_buffs_and_debuffs[0], [4])
+
+        new_buffs = [4]
+
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -197,7 +200,7 @@ class Zane(Character):
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -209,7 +212,7 @@ class Zane(Character):
     def _passive(self, debuffs, offense, Friends, Enemies, kbuffs):
         buffs = kbuffs
         debuffs = []
-        self._health += round((10 * self.__max_health) / 100)
+        self._ap += round(self._ap / 10)
         return [buffs, debuffs, offense]
 
 
@@ -282,7 +285,7 @@ class Cole(Character):
         return self.name
 
     def _basic(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -297,7 +300,7 @@ class Cole(Character):
 
         self._speed += round((2 * self._speed) / 100)
 
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         new_buffs = []
 
@@ -305,7 +308,7 @@ class Cole(Character):
         calc_debuffs = calc_buffs_and_debuffs[1]
 
         damage = Battle_Calculators.Damage_calculator(self._damage, offense, self._ap, self._crit_chance,
-                                                      self._crit_damage, 100, calc_buffs, calc_debuffs,
+                                                      self._crit_damage, 300, calc_buffs, calc_debuffs,
                                                       self._accuracy, crit_avoidance, defense, evasion)
 
         health -= damage
@@ -313,7 +316,7 @@ class Cole(Character):
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -327,7 +330,7 @@ class Cole(Character):
     def _passive(self, offense, Friends, Enemies, kbuffs):
         buffs = kbuffs
         debuffs = []
-        self._speed += round(self._speed / 100)
+        self._potency += round(self._potency / 5)
         return [buffs, debuffs, offense]
 
 
@@ -400,7 +403,7 @@ class Jay(Character):
         return self.name
 
     def _basic(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -413,7 +416,7 @@ class Jay(Character):
 
     def _special(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs, tenacity):
 
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         new_buffs = []
 
@@ -429,7 +432,7 @@ class Jay(Character):
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -443,10 +446,7 @@ class Jay(Character):
     def _passive(self, offense, Friends, Enemies, kbuffs):
         buffs = kbuffs
         debuffs = []
-        target_pos = randint(0,len(Enemies.team)-1)
-        target = Enemies.team[target_pos]
-        target_stats = target._get_block()
-        target_stats._speed -= round(target_stats._speed / 100)
+        self._speed = round(self._speed / len(Friends.team))
         return [buffs, debuffs, offense]
 
 class Lloyd(Character):
@@ -518,7 +518,7 @@ class Lloyd(Character):
         return self.name
 
     def _basic(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -532,10 +532,13 @@ class Lloyd(Character):
     def _special(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs, tenacity):
 
 
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
-        new_buffs = []
 
+        cbuffs = Battle_Calculators.Buff_calculator(cbuffs, [1, 4, 9])
+
+        new_buffs = [1, 4, 9]
+
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
 
@@ -548,7 +551,7 @@ class Lloyd(Character):
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -562,7 +565,14 @@ class Lloyd(Character):
     def _passive(self, offense, Friends, Enemies, kbuffs):
         buffs = kbuffs
         debuffs = []
-        self._defense += round(self._defense / 10)
+
+        targ = randint(0, len(Enemies.team)-1)
+
+        for i in range(len(Enemies.team)-1, -1, -1):
+            if i == targ:
+                Enemies.team.targ._health -= Enemies.team.targ._remove_health(round(self.__max_health / 10))
+
+
         return [buffs, debuffs, offense]
 
 
@@ -635,7 +645,7 @@ class Wu(Character):
         return self.name
 
     def _basic(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -647,11 +657,11 @@ class Wu(Character):
         return health
 
     def _special(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs, tenacity):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         new_buffs = []
 
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -667,7 +677,7 @@ class Wu(Character):
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
 
 
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
