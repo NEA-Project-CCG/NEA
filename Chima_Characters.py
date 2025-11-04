@@ -1,7 +1,6 @@
 from Battle_Classes import Character
 import sqlite3
 import Battle_Calculators
-from Resolve_Buffs import resolve_damage_buffs
 from random import randint
 
 
@@ -63,7 +62,7 @@ class Cragger(Character):
         return self.name
 
     def _basic(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -74,7 +73,7 @@ class Cragger(Character):
 
 
     def _special(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs, tenacity):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
         new_buffs = []
 
         calc_buffs = calc_buffs_and_debuffs[0]
@@ -87,7 +86,7 @@ class Cragger(Character):
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -164,7 +163,7 @@ class Gorzan(Character):
         return self.name
 
     def _basic(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -177,19 +176,17 @@ class Gorzan(Character):
     def _special(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs, tenacity):
         #grants defense up
 
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
-
-        cbuffs = Battle_Calculators.Buff_calculator(calc_buffs_and_debuffs[0], [6])
+        cbuffs = Battle_Calculators.Buff_calculator(cbuffs, [6])
 
         new_buffs = [6]
 
         #applies defense down
 
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
-        debuffs = Battle_Calculators.Debuff_Calculator(self._potency, tenacity, calc_buffs_and_debuffs[0], calc_buffs_and_debuffs[1], evasion, self._accuracy, [6])
+        debuffs = Battle_Calculators.Debuff_Calculator(self._potency, tenacity, calc_buffs_and_debuffs[0], calc_buffs_and_debuffs[1], evasion, self._accuracy, [6], debuffs)
 
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -202,7 +199,7 @@ class Gorzan(Character):
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -287,7 +284,7 @@ class Eris(Character):
         return self.name
 
     def _basic(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -304,7 +301,7 @@ class Eris(Character):
 
         new_buffs = []
 
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -318,7 +315,7 @@ class Eris(Character):
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -405,7 +402,7 @@ class Razar(Character):
         return self.name
 
     def _basic(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -422,7 +419,7 @@ class Razar(Character):
 
         new_buffs = []
 
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -436,7 +433,7 @@ class Razar(Character):
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -525,7 +522,7 @@ class Rinona(Character):
         return self.name
 
     def _basic(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -542,7 +539,7 @@ class Rinona(Character):
 
         new_buffs = [6]
 
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -556,7 +553,7 @@ class Rinona(Character):
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -643,7 +640,7 @@ class Laval(Character):
         return self.name
 
     def _basic(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
@@ -656,7 +653,7 @@ class Laval(Character):
 
     def _special(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs, tenacity):
 
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         new_buffs = []
 
@@ -676,7 +673,7 @@ class Laval(Character):
         cbuffs.append(1)
         cbuffs.append(4)
 
-        calc_buffs_and_debuffs = resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
+        calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
         calc_buffs = calc_buffs_and_debuffs[0]
         calc_debuffs = calc_buffs_and_debuffs[1]
