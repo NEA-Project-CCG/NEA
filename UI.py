@@ -1,7 +1,10 @@
 import pygame
+from UI_States import ui_states
 
 def initial_UI():
     pygame.init()
+    
+    font = pygame.font.Font(pygame.font.get_default_font(), 40)
 
     WIDTH = 800
     HEIGHT = 600
@@ -13,27 +16,13 @@ def initial_UI():
 
     pygame.display.flip()
 
-    return window
+    return window, font
 
-def draw_window(window, state):
-
-    if state == 0:
-        window.fill((0,0,0))
-        pygame.draw.rect(window, (255,255,255), pygame.Rect(0,0,350, 400))
-        pygame.draw.rect(window, (255,0,0), pygame.Rect(0,425,350, 175))
-        pygame.draw.rect(window, (0,255,0), pygame.Rect(375,0,425, 600))
-        
-    if state == 1:
-        window.fill((255, 255, 255))
-        pygame.draw.rect(window, (41, 103, 204), pygame.Rect(10, 10, 30, 30))
-        
-    if state == 2:
-        window.fill((255, 0, 0))
-        pygame.draw.rect(window, (41, 103, 204), pygame.Rect(10, 10, 30, 30))
-        
-    if state == 3:
-        window.fill((0, 255, 0))
-        pygame.draw.rect(window, (41, 103, 204), pygame.Rect(10, 10, 30, 30))
+def draw_window(window, state, font):
+    
+    
+    ui_states.select_state(window, state, font)
+    
         
         
         
