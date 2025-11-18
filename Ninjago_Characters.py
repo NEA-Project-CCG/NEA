@@ -1,6 +1,6 @@
 from Battle_Classes import Character
 import sqlite3
-import Battle_Calculators
+from Battle_Calculators import Battle_Calculators
 from random import randint
 
 
@@ -105,7 +105,7 @@ class Kai(Character):
         self._health -= round((self.__max_health * (10 - len(buffs) * 5)) / 100)
         if self._health <= 0:
             self._health = 1
-        buffs = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        buffs = ["offense up", "accuracy up", "crit chance up", "crit damage up", "crit avoidance up", "defense up", "evasion up", "potency up", "tenacity up"]
         return [buffs, debuffs, offense]
 
 
@@ -534,9 +534,9 @@ class Lloyd(Character):
 
 
 
-        cbuffs = Battle_Calculators.Buff_calculator(cbuffs, [1, 4, 9])
+        cbuffs = Battle_Calculators.Buff_calculator(cbuffs, ["offense up", "crit damage up", "tenacity up"])
 
-        new_buffs = [1, 4, 9]
+        new_buffs = ["offense up", "crit damage up", "tenacity up"]
 
         calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
         calc_buffs = calc_buffs_and_debuffs[0]
