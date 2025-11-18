@@ -1,6 +1,6 @@
 from Battle_Classes import Character
 import sqlite3
-import Battle_Calculators
+from Battle_Calculators import Battle_Calculators
 from random import randint
 
 
@@ -176,15 +176,15 @@ class Gorzan(Character):
     def _special(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs, tenacity):
         #grants defense up
 
-        cbuffs = Battle_Calculators.Buff_calculator(cbuffs, [6])
+        cbuffs = Battle_Calculators.Buff_calculator(cbuffs, ["defense up"])
 
-        new_buffs = [6]
+        new_buffs = ["defense up"]
 
         #applies defense down
 
         calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
-        debuffs = Battle_Calculators.Debuff_Calculator(self._potency, tenacity, calc_buffs_and_debuffs[0], calc_buffs_and_debuffs[1], evasion, self._accuracy, [6], debuffs)
+        debuffs = Battle_Calculators.Debuff_Calculator(self._potency, tenacity, calc_buffs_and_debuffs[0], calc_buffs_and_debuffs[1], evasion, self._accuracy, ["defense down"], debuffs)
 
         calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
@@ -537,7 +537,7 @@ class Rinona(Character):
         # grants defense up
         cbuffs = Battle_Calculators.Buff_calculator(cbuffs, [6])
 
-        new_buffs = [6]
+        new_buffs = ["defense up"]
 
         calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
