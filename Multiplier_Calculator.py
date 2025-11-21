@@ -21,13 +21,13 @@ class Multiplier:
         conn = sqlite3.connect("NEA Database.db")
         cursor = conn.cursor()
 
-        vals = conn.execute('''SELECT Level, Gear, Star FROM Player_Table;
+        cursor.execute('''SELECT Level, Gear, Star FROM Player_Table;
                      WHERE Player_id = ?;
                      AND Character_id = ?;''', (player_id, character_id))
 
-        level = vals.fetchone()[0]
-        gear = vals.fetchone()[1]
-        star = vals.fetchone()[2]
+        level = cursor.fetchone()[0]
+        gear = cursor.fetchone()[1]
+        star = cursor.fetchone()[2]
 
         stat_multiplier = Multiplier.overall_multiplier(level, gear, star)
 
