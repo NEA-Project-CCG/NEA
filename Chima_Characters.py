@@ -2,33 +2,38 @@ from Battle_Classes import Character
 import sqlite3
 from Battle_Calculators import Battle_Calculators
 from random import randint
+from Multiplier_Calculator import Multiplier
 
 
 class Cragger(Character):
-    def __init__(self):
+    def __init__(self, player_id):
+        cragger_id = 0
         conn = sqlite3.connect("NEA Database.db")
         cursor = conn.cursor()
-        cursor.execute('''SELECT * FROM General_character; ''')
+        cursor.execute('''SELECT * FROM General_character;''')
 
         stats = cursor.fetchall()
-        self.name = stats[0][1]
 
-        stats = stats[0]
+
+        stat_multiplier = Multiplier.calculate_stats(player_id, cragger_id)
+
+        stats = stats[cragger_id]
+        self.name = stats[1]
         stats = stats[2:]
 
-        self.__max_health = stats[0]
-        self._health = stats[0]
-        self._damage = stats[1]
-        self._evasion = stats[2]
-        self._ap = stats[3]
-        self._defense = stats[4]
-        self._crit_chance = stats[5]
-        self._crit_damage = stats[6]
+        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
+        self._health = self.__max_health
+        self._damage = round((stats[1] * stat_multiplier) / 100000)
+        self._evasion = round((stats[2] * stat_multiplier) / 100000)
+        self._ap = round((stats[3] * stat_multiplier) / 100000)
+        self._defense = round((stats[4] * stat_multiplier) / 100000)
+        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
+        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
         self._accuracy = stats[7]
-        self._crit_avoidance = stats[8]
-        self._speed = stats[9]
-        self._potency = stats[10]
-        self._tenacity = stats[11]
+        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
+        self._speed = round((stats[9] * stat_multiplier) / 100000)
+        self._potency = round((stats[10] * stat_multiplier) / 100000)
+        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
 
         conn.close()
 
@@ -105,31 +110,33 @@ class Cragger(Character):
 
 
 class Gorzan(Character):
-    def __init__(self):
+    def __init__(self, player_id):
+        gorzan_id = 1
         conn = sqlite3.connect("NEA Database.db")
         cursor = conn.cursor()
         cursor.execute('''SELECT * FROM General_character''')
 
         stats = cursor.fetchall()
 
+        stat_multiplier = Multiplier.calculate_stats(player_id, gorzan_id)
 
-        stats = stats[1]
+        stats = stats[gorzan_id]
         self.name = stats[1]
         stats = stats[2:]
 
-        self.__max_health = stats[0]
-        self._health = stats[0]
-        self._damage = stats[1]
-        self._evasion = stats[2]
-        self._ap = stats[3]
-        self._defense = stats[4]
-        self._crit_chance = stats[5]
-        self._crit_damage = stats[6]
+        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
+        self._health = self.__max_health
+        self._damage = round((stats[1] * stat_multiplier) / 100000)
+        self._evasion = round((stats[2] * stat_multiplier) / 100000)
+        self._ap = round((stats[3] * stat_multiplier) / 100000)
+        self._defense = round((stats[4] * stat_multiplier) / 100000)
+        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
+        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
         self._accuracy = stats[7]
-        self._crit_avoidance = stats[8]
-        self._speed = stats[9]
-        self._potency = stats[10]
-        self._tenacity = stats[11]
+        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
+        self._speed = round((stats[9] * stat_multiplier) / 100000)
+        self._potency = round((stats[10] * stat_multiplier) / 100000)
+        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
 
         conn.close()
 
@@ -216,7 +223,8 @@ class Gorzan(Character):
 
 
 class Eris(Character):
-    def __init__(self):
+    def __init__(self, player_id):
+        eris_id = 2
         conn = sqlite3.connect("NEA Database.db")
         cursor = conn.cursor()
         cursor.execute('''SELECT *
@@ -224,23 +232,25 @@ class Eris(Character):
 
         stats = cursor.fetchall()
 
-        stats = stats[2]
+        stat_multiplier = Multiplier.calculate_stats(player_id, eris_id)
+
+        stats = stats[eris_id]
         self.name = stats[1]
         stats = stats[2:]
 
-        self.__max_health = stats[0]
-        self._health = stats[0]
-        self._damage = stats[1]
-        self._evasion = stats[2]
-        self._ap = stats[3]
-        self._defense = stats[4]
-        self._crit_chance = stats[5]
-        self._crit_damage = stats[6]
+        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
+        self._health = self.__max_health
+        self._damage = round((stats[1] * stat_multiplier) / 100000)
+        self._evasion = round((stats[2] * stat_multiplier) / 100000)
+        self._ap = round((stats[3] * stat_multiplier) / 100000)
+        self._defense = round((stats[4] * stat_multiplier) / 100000)
+        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
+        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
         self._accuracy = stats[7]
-        self._crit_avoidance = stats[8]
-        self._speed = stats[9]
-        self._potency = stats[10]
-        self._tenacity = stats[11]
+        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
+        self._speed = round((stats[9] * stat_multiplier) / 100000)
+        self._potency = round((stats[10] * stat_multiplier) / 100000)
+        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
 
         conn.close()
 
@@ -334,7 +344,8 @@ class Eris(Character):
 
 
 class Razar(Character):
-    def __init__(self):
+    def __init__(self, player_id):
+        razar_id = 3
         conn = sqlite3.connect("NEA Database.db")
         cursor = conn.cursor()
         cursor.execute('''SELECT *
@@ -342,23 +353,25 @@ class Razar(Character):
 
         stats = cursor.fetchall()
 
-        stats = stats[3]
+        stat_multiplier = Multiplier.calculate_stats(player_id, razar_id)
+
+        stats = stats[razar_id]
         self.name = stats[1]
         stats = stats[2:]
 
-        self.__max_health = stats[0]
-        self._health = stats[0]
-        self._damage = stats[1]
-        self._evasion = stats[2]
-        self._ap = stats[3]
-        self._defense = stats[4]
-        self._crit_chance = stats[5]
-        self._crit_damage = stats[6]
+        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
+        self._health = self.__max_health
+        self._damage = round((stats[1] * stat_multiplier) / 100000)
+        self._evasion = round((stats[2] * stat_multiplier) / 100000)
+        self._ap = round((stats[3] * stat_multiplier) / 100000)
+        self._defense = round((stats[4] * stat_multiplier) / 100000)
+        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
+        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
         self._accuracy = stats[7]
-        self._crit_avoidance = stats[8]
-        self._speed = stats[9]
-        self._potency = stats[10]
-        self._tenacity = stats[11]
+        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
+        self._speed = round((stats[9] * stat_multiplier) / 100000)
+        self._potency = round((stats[10] * stat_multiplier) / 100000)
+        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
 
         conn.close()
 
@@ -454,7 +467,8 @@ class Razar(Character):
         return [buffs, debuffs, offense]
 
 class Rinona(Character):
-    def __init__(self):
+    def __init__(self, player_id):
+        rinona_id = 4
         conn = sqlite3.connect("NEA Database.db")
         cursor = conn.cursor()
         cursor.execute('''SELECT *
@@ -462,23 +476,25 @@ class Rinona(Character):
 
         stats = cursor.fetchall()
 
-        stats = stats[4]
+        stat_multiplier = Multiplier.calculate_stats(player_id, rinona_id)
+
+        stats = stats[rinona_id]
         self.name = stats[1]
         stats = stats[2:]
 
-        self.__max_health = stats[0]
-        self._health = stats[0]
-        self._damage = stats[1]
-        self._evasion = stats[2]
-        self._ap = stats[3]
-        self._defense = stats[4]
-        self._crit_chance = stats[5]
-        self._crit_damage = stats[6]
+        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
+        self._health = self.__max_health
+        self._damage = round((stats[1] * stat_multiplier) / 100000)
+        self._evasion = round((stats[2] * stat_multiplier) / 100000)
+        self._ap = round((stats[3] * stat_multiplier) / 100000)
+        self._defense = round((stats[4] * stat_multiplier) / 100000)
+        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
+        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
         self._accuracy = stats[7]
-        self._crit_avoidance = stats[8]
-        self._speed = stats[9]
-        self._potency = stats[10]
-        self._tenacity = stats[11]
+        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
+        self._speed = round((stats[9] * stat_multiplier) / 100000)
+        self._potency = round((stats[10] * stat_multiplier) / 100000)
+        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
 
         conn.close()
 
@@ -572,7 +588,8 @@ class Rinona(Character):
 
 
 class Laval(Character):
-    def __init__(self):
+    def __init__(self, player_id):
+        laval_id = 5
         conn = sqlite3.connect("NEA Database.db")
         cursor = conn.cursor()
         cursor.execute('''SELECT *
@@ -580,23 +597,25 @@ class Laval(Character):
 
         stats = cursor.fetchall()
 
-        stats = stats[5]
+        stat_multiplier = Multiplier.calculate_stats(player_id, laval_id)
+
+        stats = stats[laval_id]
         self.name = stats[1]
         stats = stats[2:]
 
-        self.__max_health = stats[0]
-        self._health = stats[0]
-        self._damage = stats[1]
-        self._evasion = stats[2]
-        self._ap = stats[3]
-        self._defense = stats[4]
-        self._crit_chance = stats[5]
-        self._crit_damage = stats[6]
+        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
+        self._health = self.__max_health
+        self._damage = round((stats[1] * stat_multiplier) / 100000)
+        self._evasion = round((stats[2] * stat_multiplier) / 100000)
+        self._ap = round((stats[3] * stat_multiplier) / 100000)
+        self._defense = round((stats[4] * stat_multiplier) / 100000)
+        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
+        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
         self._accuracy = stats[7]
-        self._crit_avoidance = stats[8]
-        self._speed = stats[9]
-        self._potency = stats[10]
-        self._tenacity = stats[11]
+        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
+        self._speed = round((stats[9] * stat_multiplier) / 100000)
+        self._potency = round((stats[10] * stat_multiplier) / 100000)
+        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
 
         conn.close()
 
