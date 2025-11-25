@@ -17,7 +17,7 @@ class Multiplier:
         return total_m
 
     @staticmethod
-    def calculate_stats(player_id, character_id):
+    def calculate_stats_player(player_id, character_id):
         conn = sqlite3.connect("NEA Database.db")
         cursor = conn.cursor()
 
@@ -34,6 +34,14 @@ class Multiplier:
         conn.close()
 
         return stat_multiplier
+
+    @staticmethod
+    def calculate_stats_enemy(level, gear, star):
+        stat_multiplier = Multiplier.overall_multiplier(level, gear, star)
+
+        return stat_multiplier
+
+
         
     @staticmethod
     def level_multiplier(level):
@@ -44,10 +52,10 @@ class Multiplier:
 
     @staticmethod
     def gear_multiplier(gear):
-        gear_m = gear * 10
+        gear_m = gear**2
         return gear_m
 
     @staticmethod
     def star_multiplier(star):
-        star_m = star * 14
+        star_m = star**3
         return star_m
