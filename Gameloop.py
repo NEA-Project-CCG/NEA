@@ -78,12 +78,31 @@ def gameloop():
                     if state == "campaigns":
 
                         if pos_x >= 40 and pos_y >= 60 and pos_x <= 290 and pos_y <= 540:
-                            state = "campaign_1"
+                            state = "campaign_1_1"
 
                     #matches whether the state is a campaign using regex
                     elif re.match(campaign_re, state):
                         if pos_x >= 10 and pos_y >= 10 and pos_x <= 40 and pos_y <= 40:
                             state = "campaigns"
+
+                        if (pos_y >= 225 and pos_y <= 265) or (pos_y >= 450 and pos_y <= 490):
+                            for i in range(10):
+                                if pos_x >= (70*(i) + 55) and pos_x <= (70*(i) + 95):
+                                    if len(state) < len("campaign_x_x_"):
+                                        state += f"_{i}"
+                                    elif state[len(state)-1] != f"{i}":
+                                        state = state[:(len(state)-1)] + f"{i}"
+
+                        if pos_y >= 50 and pos_y <= 100:
+                            if pos_x <= 260 and pos_x >= 0:
+                                state = state[:11] + f"1"
+                            elif pos_x >= 270 and pos_x <= 530:
+                                state = state[:11] + f"2"
+                            elif pos_x >= 540 and pos_x <= 800:
+                                state = state[:11] + f"3"
+
+                            print(f"DEBUG: {state}")
+
 
 
 
@@ -107,7 +126,7 @@ def gameloop():
 
 
 
-        draw_window(window, state, font)
+        draw_window(window, state, font, campaign_re)
         
         
     conn.close()
