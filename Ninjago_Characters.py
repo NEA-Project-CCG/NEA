@@ -6,15 +6,15 @@ from Multiplier_Calculator import Multiplier
 
 
 class Kai(Character):
-    def __init__(self, player_id):
+    def __init__(self, player_id=None, stat_multiplier=None):
         kai_id = 6
         conn = sqlite3.connect("NEA Database.db")
         cursor = conn.cursor()
         cursor.execute('''SELECT * FROM General_character; ''')
 
         stats = cursor.fetchall()
-
-        stat_multiplier = Multiplier.calculate_stats(player_id, kai_id)
+        if player_id is not None:
+            stat_multiplier = Multiplier.calculate_stats_player(player_id, kai_id)
 
         self.name = stats[0][1]
 
@@ -115,15 +115,15 @@ class Kai(Character):
 
 
 class Zane(Character):
-    def __init__(self, player_id):
+    def __init__(self, player_id=None, stat_multiplier=None):
         zane_id = 7
         conn = sqlite3.connect("NEA Database.db")
         cursor = conn.cursor()
         cursor.execute('''SELECT * FROM General_character''')
 
         stats = cursor.fetchall()
-
-        stat_multiplier = Multiplier.calculate_stats(player_id, zane_id)
+        if player_id is not None:
+            stat_multiplier = Multiplier.calculate_stats_player(player_id, zane_id)
 
         stats = stats[zane_id]
         self.name = stats[1]
@@ -224,7 +224,7 @@ class Zane(Character):
 
 
 class Cole(Character):
-    def __init__(self, player_id):
+    def __init__(self, player_id=None, stat_multiplier=None):
         cole_id = 8
         conn = sqlite3.connect("NEA Database.db")
         cursor = conn.cursor()
@@ -232,8 +232,8 @@ class Cole(Character):
                           FROM General_character''')
 
         stats = cursor.fetchall()
-
-        stat_multiplier = Multiplier.calculate_stats(player_id, cole_id)
+        if player_id is not None:
+            stat_multiplier = Multiplier.calculate_stats_player(player_id, cole_id)
 
         stats = stats[cole_id]
         self.name = stats[1]
@@ -345,7 +345,7 @@ class Cole(Character):
 
 
 class Jay(Character):
-    def __init__(self, player_id):
+    def __init__(self, player_id=None, stat_multiplier=None):
         jay_id = 9
         conn = sqlite3.connect("NEA Database.db")
         cursor = conn.cursor()
@@ -353,8 +353,8 @@ class Jay(Character):
                           FROM General_character''')
 
         stats = cursor.fetchall()
-
-        stat_multiplier = Multiplier.calculate_stats(player_id, jay_id)
+        if player_id is not None:
+            stat_multiplier = Multiplier.calculate_stats(player_id, jay_id)
 
         stats = stats[jay_id]
         self.name = stats[1]
@@ -463,7 +463,7 @@ class Jay(Character):
         return [buffs, debuffs, offense]
 
 class Lloyd(Character):
-    def __init__(self, player_id):
+    def __init__(self, player_id=None, stat_multiplier=None):
         lloyd_id = 10
         conn = sqlite3.connect("NEA Database.db")
         cursor = conn.cursor()
@@ -471,8 +471,8 @@ class Lloyd(Character):
                           FROM General_character''')
 
         stats = cursor.fetchall()
-
-        stat_multiplier = Multiplier.calculate_stats(player_id, lloyd_id)
+        if player_id is not None:
+            stat_multiplier = Multiplier.calculate_stats_player(player_id, lloyd_id)
 
         stats = stats[lloyd_id]
         self.name = stats[1]
@@ -593,7 +593,7 @@ class Lloyd(Character):
 
 
 class Wu(Character):
-    def __init__(self, player_id):
+    def __init__(self, player_id=None, stat_multiplier=None):
         wu_id = 11
         conn = sqlite3.connect("NEA Database.db")
         cursor = conn.cursor()
@@ -601,8 +601,8 @@ class Wu(Character):
                           FROM General_character''')
 
         stats = cursor.fetchall()
-
-        stat_multiplier = Multiplier.calculate_stats(player_id, wu_id)
+        if player_id is not None:
+            stat_multiplier = Multiplier.calculate_stats_player(player_id, wu_id)
 
         stats = stats[wu_id]
         self.name = stats[1]
