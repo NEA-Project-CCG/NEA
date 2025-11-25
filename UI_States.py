@@ -1,10 +1,11 @@
 import Campaign_logic
-
+import re
 import pygame
 
 class ui_states:
     @staticmethod
-    def select_state(window, state, font):
+    def select_state(window, state, font, campaign_re):
+        chapter_index = 11
         if state == "hub":
             ui_states.__state_hub(window, font)
 
@@ -17,8 +18,14 @@ class ui_states:
         if state == "campaigns":
             ui_states.__state_campaigns(window, font)
 
-        if state == "campaign_1":
-            ui_states.__state_campaign_1(window, font)
+        if re.match(campaign_re, state):
+            ui_states.__state_campaign_base(window, font)
+            if state[chapter_index] == "1":
+                ui_states.__state_campaign_chapter_1(window, font)
+            elif state[chapter_index] == "2":
+                ui_states.__state_campaign_chapter_2(window, font)
+            elif state[chapter_index] == "3":
+                ui_states.__state_campaign_chapter_3(window, font)
 
         return window
 
@@ -74,14 +81,14 @@ class ui_states:
         return window
 
     @staticmethod
-    def __state_campaign_1(window, font):
+    def __state_campaign_base(window, font):
         window.fill((7, 34, 166))
 
         # Draws back button
         pygame.draw.rect(window, (41, 103, 204), pygame.Rect(10, 10, 30, 30))
 
         # Draws campaign background
-        pygame.draw.rect(window, (255, 125, 125), pygame.Rect(10, 100, 780, 490))
+        pygame.draw.rect(window, (255, 125, 125), pygame.Rect(0, 100, 800, 500))
 
         pos_x = 55
         pos_y = [450, 225]
@@ -95,6 +102,36 @@ class ui_states:
 
             pos_x += 70
 
+        for i in range(3):
+            pygame.draw.rect(window, (255, 255, 125), pygame.Rect((270*(i)), 50, 260, 50))
+
+            text = str(i + 1)
+            text = font.render(text, True, (0, 0, 0))
+            window.blit(text, (270*(i)+125, 50))
+
+    @staticmethod
+    def __state_campaign_chapter_1(window, font):
+        pygame.draw.rect(window, (138, 154, 91), pygame.Rect(0, 50, 260, 50))
+
+        text = "1"
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (125, 50))
+
+    @staticmethod
+    def __state_campaign_chapter_2(window, font):
+        pygame.draw.rect(window, (138, 154, 91), pygame.Rect(270, 50, 260, 50))
+
+        text = "2"
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (395, 50))
+
+    @staticmethod
+    def __state_campaign_chapter_3(window, font):
+        pygame.draw.rect(window, (138, 154, 91), pygame.Rect(540, 50, 260, 50))
+
+        text = "3"
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (665, 50))
 
 
 
