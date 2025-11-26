@@ -27,7 +27,6 @@ class ui_states:
             elif state[chapter_index] == "3":
                 ui_states.__state_campaign_chapter_3(window, font)
 
-        return window
 
     @staticmethod
     def __state_hub(window, font):
@@ -47,7 +46,6 @@ class ui_states:
         text = font.render(text, True, (255, 255, 255))
         window.blit(text, (415, 550))
 
-        return window
 
     #Characters screen
     @staticmethod
@@ -55,7 +53,6 @@ class ui_states:
         window.fill((0, 0, 255))
         pygame.draw.rect(window, (41, 103, 204), pygame.Rect(10, 10, 30, 30))
 
-        return window
 
     #Journey Guide screen
     @staticmethod
@@ -77,8 +74,6 @@ class ui_states:
         text = ("Campaign 1")
         text = font.render(text, True, (255, 255, 255))
         window.blit(text, (45, 430))
-
-        return window
 
     @staticmethod
     def __state_campaign_base(window, font):
@@ -134,8 +129,57 @@ class ui_states:
         window.blit(text, (665, 50))
 
 
-
-
-
+    @staticmethod
+    def __Get_Window():
+        window = pygame.display.get_surface()
 
         return window
+
+
+    @staticmethod
+    def __Get_Font():
+        font = pygame.font.SysFont("monospace", 4)
+
+        return font
+
+
+    @staticmethod
+    def Character_selection_screen(names):
+
+        window = ui_states.__Get_Window()
+        font = ui_states.__Get_Font()
+
+        x_start = [10, 60]
+        y_start = 400
+        Rect_list = []
+
+        for i in range(len(names)):
+            text = names[i]
+            text = font.render(text, True, (255, 255, 255))
+
+            Rect_list.append(pygame.Rect(x_start[i%2], y_start + (15 * (i//2)), 40, 10))
+
+            pygame.draw.rect(window, (255, 0, 0), Rect_list[i])
+
+            window.blit(text, (x_start[i%2]+20, y_start + (15 * (i//2))))
+
+        down = pygame.Rect(10, 570, 90, 20)
+        pygame.draw.rect(window, (0, 255, 0), down)
+
+        text = "down"
+        text = font.render(text, True, (255, 255, 255))
+
+        window.blit(text, (45,570) )
+
+        Rect_list.append(down)
+
+        return Rect_list
+
+    @staticmethod
+    def down_button(Rect_list):
+
+        down = Rect_list[len(Rect_list)-1]
+
+
+
+
