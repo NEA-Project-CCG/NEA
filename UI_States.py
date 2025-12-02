@@ -1,6 +1,7 @@
-import Campaign_logic
 import re
 import pygame
+from tkinter import Entry, Button, Frame, Tk
+from Tkinter_Backend import Tkinter_Backend
 
 class ui_states:
     @staticmethod
@@ -32,17 +33,17 @@ class ui_states:
     def __state_hub(window, font):
         window.fill((0, 0, 0))
         pygame.draw.rect(window, (0, 0, 255), pygame.Rect(0, 0, 350, 400))
-        text = ("Characters")
+        text = "Characters"
         text = font.render(text, True, (255, 255, 255))
         window.blit(text, (30, 350))
 
         pygame.draw.rect(window, (255, 0, 0), pygame.Rect(0, 425, 350, 175))
-        text = ("Journey Guide")
+        text = "Journey Guide"
         text = font.render(text, True, (255, 255, 255))
         window.blit(text, (15, 550))
 
         pygame.draw.rect(window, (0, 255, 0), pygame.Rect(375, 0, 425, 600))
-        text = ("Campaigns")
+        text = "Campaigns"
         text = font.render(text, True, (255, 255, 255))
         window.blit(text, (415, 550))
 
@@ -71,7 +72,7 @@ class ui_states:
 
         #draws first campaign
         pygame.draw.rect(window, (255, 0, 0), pygame.Rect(40, 60, 250, 480))
-        text = ("Campaign 1")
+        text = "Campaign 1"
         text = font.render(text, True, (255, 255, 255))
         window.blit(text, (45, 430))
 
@@ -98,11 +99,11 @@ class ui_states:
             pos_x += 70
 
         for i in range(3):
-            pygame.draw.rect(window, (255, 255, 125), pygame.Rect((270*(i)), 50, 260, 50))
+            pygame.draw.rect(window, (255, 255, 125), pygame.Rect((270*i), 50, 260, 50))
 
             text = str(i + 1)
             text = font.render(text, True, (0, 0, 0))
-            window.blit(text, (270*(i)+125, 50))
+            window.blit(text, (270*i+125, 50))
 
     @staticmethod
     def __state_campaign_chapter_1(window, font):
@@ -144,41 +145,35 @@ class ui_states:
 
 
     @staticmethod
-    def Character_selection_screen(names):
+    def Character_selection_screen_setup(names):
+        root = Tk()
 
-        window = ui_states.__Get_Window()
-        font = ui_states.__Get_Font()
+        button_list = []
+        for i in range(len(names)):
+            name = names[i]
+            temp_button = Button(root, text=name)
+            button_list.append(temp_button)
+            button_list[i].grid(row=i // 2, column=i % 2, padx=10, pady=10)
+            temp_button = None
 
-        x_start = [10, 60]
-        y_start = 400
-        Rect_list = []
 
         for i in range(len(names)):
-            text = names[i]
-            text = font.render(text, True, (255, 255, 255))
+            name = names[i]
+            text = lambda id: Tkinter_Backend.add_char(names[id])
+            button_list[i]["command"] = text(i)
 
-            Rect_list.append(pygame.Rect(x_start[i%2], y_start + (15 * (i//2)), 40, 10))
 
-            pygame.draw.rect(window, (255, 0, 0), Rect_list[i])
 
-            window.blit(text, (x_start[i%2]+20, y_start + (15 * (i//2))))
 
-        down = pygame.Rect(10, 570, 90, 20)
-        pygame.draw.rect(window, (0, 255, 0), down)
 
-        text = "down"
-        text = font.render(text, True, (255, 255, 255))
+        root.mainloop()
 
-        window.blit(text, (45,570) )
 
-        Rect_list.append(down)
 
-        return Rect_list
+if __name__ == '__main__':
+    names = ['Jeff', 'Frank', 'George', 'Ringo', 'John']
+    ui_states.Character_selection_screen_setup(names)
 
-    @staticmethod
-    def down_button(Rect_list):
-
-        down = Rect_list[len(Rect_list)-1]
 
 
 
