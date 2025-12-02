@@ -1,24 +1,20 @@
 from Battle_Classes import Character
-import sqlite3
 from Battle_Calculators import Battle_Calculators
 from random import randint
 from Multiplier_Calculator import Multiplier
+from Database_Querying import Database
 
 
 class Kai(Character):
     def __init__(self, player_id=None, stat_multiplier=None):
         kai_id = 6
-        conn = sqlite3.connect("NEA Database.db")
-        cursor = conn.cursor()
-        cursor.execute('''SELECT * FROM General_character; ''')
+        stats = Database.Get_stats(kai_id)
 
-        stats = cursor.fetchall()
         if player_id is not None:
             stat_multiplier = Multiplier.calculate_stats_player(player_id, kai_id)
 
         self.name = stats[0][1]
 
-        stats = stats[kai_id]
         stats = stats[2:]
 
         self.__max_health = round((stats[0] * stat_multiplier) / 100000)
@@ -35,7 +31,7 @@ class Kai(Character):
         self._potency = round((stats[10] * stat_multiplier) / 100000)
         self._tenacity = round((stats[11] * stat_multiplier) / 100000)
 
-        conn.close()
+
 
 
 
@@ -117,11 +113,8 @@ class Kai(Character):
 class Zane(Character):
     def __init__(self, player_id=None, stat_multiplier=None):
         zane_id = 7
-        conn = sqlite3.connect("NEA Database.db")
-        cursor = conn.cursor()
-        cursor.execute('''SELECT * FROM General_character''')
+        stats = Database.Get_stats(zane_id)
 
-        stats = cursor.fetchall()
         if player_id is not None:
             stat_multiplier = Multiplier.calculate_stats_player(player_id, zane_id)
 
@@ -143,7 +136,7 @@ class Zane(Character):
         self._potency = round((stats[10] * stat_multiplier) / 100000)
         self._tenacity = round((stats[11] * stat_multiplier) / 100000)
 
-        conn.close()
+
 
 
 
@@ -226,16 +219,11 @@ class Zane(Character):
 class Cole(Character):
     def __init__(self, player_id=None, stat_multiplier=None):
         cole_id = 8
-        conn = sqlite3.connect("NEA Database.db")
-        cursor = conn.cursor()
-        cursor.execute('''SELECT *
-                          FROM General_character''')
+        stats = Database.Get_stats(cole_id)
 
-        stats = cursor.fetchall()
         if player_id is not None:
             stat_multiplier = Multiplier.calculate_stats_player(player_id, cole_id)
 
-        stats = stats[cole_id]
         self.name = stats[1]
         stats = stats[2:]
 
@@ -253,7 +241,7 @@ class Cole(Character):
         self._potency = round((stats[10] * stat_multiplier) / 100000)
         self._tenacity = round((stats[11] * stat_multiplier) / 100000)
 
-        conn.close()
+
 
     def GetHealth(self):
         return self._health
@@ -347,16 +335,11 @@ class Cole(Character):
 class Jay(Character):
     def __init__(self, player_id=None, stat_multiplier=None):
         jay_id = 9
-        conn = sqlite3.connect("NEA Database.db")
-        cursor = conn.cursor()
-        cursor.execute('''SELECT *
-                          FROM General_character''')
+        stats = Database.Get_stats(jay_id)
 
-        stats = cursor.fetchall()
         if player_id is not None:
-            stat_multiplier = Multiplier.calculate_stats(player_id, jay_id)
+            stat_multiplier = Multiplier.calculate_stats_player(player_id, jay_id)
 
-        stats = stats[jay_id]
         self.name = stats[1]
         stats = stats[2:]
 
@@ -374,7 +357,6 @@ class Jay(Character):
         self._potency = round((stats[10] * stat_multiplier) / 100000)
         self._tenacity = round((stats[11] * stat_multiplier) / 100000)
 
-        conn.close()
 
     def GetHealth(self):
         return self._health
@@ -465,16 +447,12 @@ class Jay(Character):
 class Lloyd(Character):
     def __init__(self, player_id=None, stat_multiplier=None):
         lloyd_id = 10
-        conn = sqlite3.connect("NEA Database.db")
-        cursor = conn.cursor()
-        cursor.execute('''SELECT *
-                          FROM General_character''')
+        stats = Database.Get_stats(lloyd_id)
 
-        stats = cursor.fetchall()
         if player_id is not None:
             stat_multiplier = Multiplier.calculate_stats_player(player_id, lloyd_id)
 
-        stats = stats[lloyd_id]
+
         self.name = stats[1]
         stats = stats[2:]
 
@@ -492,7 +470,6 @@ class Lloyd(Character):
         self._potency = round((stats[10] * stat_multiplier) / 100000)
         self._tenacity = round((stats[11] * stat_multiplier) / 100000)
 
-        conn.close()
 
     def GetHealth(self):
         return self._health
@@ -595,16 +572,11 @@ class Lloyd(Character):
 class Wu(Character):
     def __init__(self, player_id=None, stat_multiplier=None):
         wu_id = 11
-        conn = sqlite3.connect("NEA Database.db")
-        cursor = conn.cursor()
-        cursor.execute('''SELECT *
-                          FROM General_character''')
+        stats = Database.Get_stats(wu_id)
 
-        stats = cursor.fetchall()
         if player_id is not None:
             stat_multiplier = Multiplier.calculate_stats_player(player_id, wu_id)
 
-        stats = stats[wu_id]
         self.name = stats[1]
         stats = stats[2:]
 
@@ -622,7 +594,6 @@ class Wu(Character):
         self._potency = round((stats[10] * stat_multiplier)/100000)
         self._tenacity = round((stats[11] * stat_multiplier)/100000)
 
-        conn.close()
 
     def GetHealth(self):
         return self._health
