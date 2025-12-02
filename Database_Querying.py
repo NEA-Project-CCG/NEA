@@ -86,3 +86,63 @@ class Database:
         conn.close()
 
         return level, gear, star
+
+    @staticmethod
+    def Find_Player_Battle(campaign, chapter, stage, player_id):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+
+        cursor.execute("""SELECT Battle_id
+                          FROM Campaigns;
+        WHERE Campaign = ?;
+        AND Chapter = ?;
+        AND Stage = ?;""",
+                       (campaign, chapter, stage))
+
+        battle_id = cursor.fetchone()
+
+        conn.close()
+
+        comp = Database.__check_applicable(player_id, battle_id[0])
+        return comp, battle_id
+
+
+    @staticmethod
+    def __check_applicable(player_id, battle_id):
+
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+
+        cursor.execute("""SELECT Prev_completed
+                          FROM Campaigns_Player;
+        WHERE Battle_id = ?;
+        AND Player_id = ?;""",
+                       (battle_id, player_id))
+
+        completed_battle_id = cursor.fetchone()
+
+        conn.close()
+
+        if completed_battle_id[0]:
+            return True
+        return False
+
+    @staticmethod
+    def Get_player_char_names(player_id):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+
+        cursor.execute("""SELECT Name
+                          FROM General_Character,
+                               Player_Table;
+        WHERE Player_Table.Player_id = ?;
+        AND General_Character.Character_id = Player_Table.Character_id;
+        AND Player_Table.Collected = True;
+        ORDER BY Level DESC;""",
+                       (player_id,))
+
+        names = cursor.fetchall()
+
+        conn.close()
+
+        return names
