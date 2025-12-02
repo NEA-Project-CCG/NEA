@@ -353,7 +353,6 @@ class Razar(Character):
         self._potency = round((stats[10] * stat_multiplier) / 100000)
         self._tenacity = round((stats[11] * stat_multiplier) / 100000)
 
-        conn.close()
 
     def GetHealth(self):
         return self._health
@@ -449,16 +448,11 @@ class Razar(Character):
 class Rinona(Character):
     def __init__(self, player_id=None, stat_multiplier=None):
         rinona_id = 4
-        conn = sqlite3.connect("NEA Database.db")
-        cursor = conn.cursor()
-        cursor.execute('''SELECT *
-                          FROM General_character''')
+        stats = Database.Get_stats(rinona_id)
 
-        stats = cursor.fetchall()
         if player_id is not None:
             stat_multiplier = Multiplier.calculate_stats_player(player_id, rinona_id)
 
-        stats = stats[rinona_id]
         self.name = stats[1]
         stats = stats[2:]
 
@@ -475,8 +469,6 @@ class Rinona(Character):
         self._speed = round((stats[9] * stat_multiplier) / 100000)
         self._potency = round((stats[10] * stat_multiplier) / 100000)
         self._tenacity = round((stats[11] * stat_multiplier) / 100000)
-
-        conn.close()
 
     def GetHealth(self):
         return self._health
@@ -570,16 +562,11 @@ class Rinona(Character):
 class Laval(Character):
     def __init__(self, player_id=None, stat_multiplier=None):
         laval_id = 5
-        conn = sqlite3.connect("NEA Database.db")
-        cursor = conn.cursor()
-        cursor.execute('''SELECT *
-                          FROM General_character''')
+        stats = Database.Get_stats(laval_id)
 
-        stats = cursor.fetchall()
         if player_id is not None:
             stat_multiplier = Multiplier.calculate_stats_player(player_id, laval_id)
 
-        stats = stats[laval_id]
         self.name = stats[1]
         stats = stats[2:]
 
@@ -597,7 +584,7 @@ class Laval(Character):
         self._potency = round((stats[10] * stat_multiplier) / 100000)
         self._tenacity = round((stats[11] * stat_multiplier) / 100000)
 
-        conn.close()
+
 
     def GetHealth(self):
         return self._health
