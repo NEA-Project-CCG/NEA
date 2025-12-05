@@ -1,4 +1,5 @@
 import sqlite3
+from typing import Any
 
 
 class Database:
@@ -146,3 +147,15 @@ class Database:
         conn.close()
 
         return names
+
+    @staticmethod
+    def Char_id_from_name(name: object) -> Any:
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""SELECT Character_id FROM General_character 
+                       WHERE Charater_Name = ?;""",
+                       [name])
+
+        character_id = cursor.fetchone()[0]
+        conn.close()
+        return character_id
