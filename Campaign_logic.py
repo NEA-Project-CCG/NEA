@@ -1,4 +1,4 @@
-from UI_States import ui_states
+from Tkinter_Backend import Tkinter_Backend
 from Ninjago_Characters import *
 from Chima_Characters import *
 
@@ -25,10 +25,10 @@ class Campaign_Logic:
         comp, battle_id = Database.Find_Player_Battle(campaign, chapter, stage, player_id)
 
         if comp:
-            Campaign_Logic.start_battle(battle_id)
+            Campaign_Logic.start_battle(battle_id, player_id)
 
     @staticmethod
-    def start_battle(battle_id):
+    def start_battle(battle_id, player_id):
 
         Campaign_chars = Database.Get_Campaign_Chars(battle_id)
 
@@ -50,9 +50,13 @@ class Campaign_Logic:
         # Echaracter4 = Campaign_Logic.__init_char(Enemy_battle[3], multiplier)
         # Echaracter5 = Campaign_Logic.__init_char(Enemy_battle[4], multiplier)
 
-        TempDict = {}
+        CharDict = {}
         for i in range(5):
-            TempDict["EChar"+str(i+1)] = Campaign_Logic.__init_char(Campaign_chars[i], multiplier)
+            CharDict["EChar"+str(i+1)] = Campaign_Logic.__init_Echar(Campaign_chars[i], multiplier)
+
+        chars = Campaign_Logic.__Player_choose_chars(player_id)
+        for i in range(5):
+            CharDict["PChar"+str(i+1)] = Campaign_Logic.__init_Pchar(chars[i], player_id)
 
         # TempDict["EChar1"]
         # ECharacters[0]
@@ -62,7 +66,7 @@ class Campaign_Logic:
 
 
     @staticmethod
-    def __init_char(character_id, multiplier):
+    def __init_Echar(character_id, multiplier):
 
         character = Campaign_Logic.character_object_call[character_id](stat_multiplier=multiplier)
 
@@ -70,10 +74,24 @@ class Campaign_Logic:
         return character
 
     @staticmethod
+    def __init_Pchar(char, player_id):
+
+        character = Campaign_Logic.character_object_call[char](player_id)
+
+    @staticmethod
     def __Player_choose_chars(player_id):
         names = Database.Get_player_char_names(player_id)
 
-        ui_states.Character_selection_screen_setup(names)
+        chars = []
+
+        for i in range(5):
+            char, name_to_remove = Tkinter_Backend.Player_chars(names)
+            names = names.remove(name_to_remove)
+            chars.append(char)
+
+        return chars
+
+
 
 
 
