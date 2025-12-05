@@ -1,6 +1,6 @@
 import re
 import pygame
-from tkinter import Entry, Button, Frame, Tk
+
 from Tkinter_Backend import Tkinter_Backend
 
 class ui_states:
@@ -144,35 +144,7 @@ class ui_states:
         return font
 
 
-    @staticmethod
-    def Character_selection_screen_setup(names):
-        root = Tk()
 
-        button_list = []
-        for i in range(len(names)):
-            name = names[i]
-            temp_button = Button(root, text=name)
-            button_list.append(temp_button)
-            button_list[i].grid(row=i // 2, column=i % 2, padx=10, pady=10)
-            temp_button = None
-
-
-        for i in range(len(names)):
-            name = names[i]
-            text = lambda id: Tkinter_Backend.add_char(names[id])
-            button_list[i]["command"] = text(i)
-
-
-
-
-
-        root.mainloop()
-
-
-
-if __name__ == '__main__':
-    names = ['Jeff', 'Frank', 'George', 'Ringo', 'John']
-    ui_states.Character_selection_screen_setup(names)
 
 
 
