@@ -18,15 +18,24 @@ def initial_UI():
 
     return window, font
 
-def draw_window(window, state, font):
+def draw_window(window, state, font, campaign_re):
     
     
-    ui_states.select_state(window, state, font)
+    ui_states.select_state(window, state, font, campaign_re)
     
         
         
         
     pygame.display.flip()
+
+def draw_battle(window, characters):
+    font = pygame.font.Font(pygame.font.get_default_font(), 20)
+    ui_states.Battle_Background(window)
+    ui_states.Charatcer_names_and_health(window, characters, font)
+
+
+    pygame.display.flip()
+
 
 
 
