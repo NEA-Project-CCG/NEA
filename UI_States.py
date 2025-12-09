@@ -29,6 +29,7 @@ class ui_states:
                 ui_states.__state_campaign_chapter_3(window, font)
 
 
+
     @staticmethod
     def __state_hub(window, font):
         window.fill((0, 0, 0))
@@ -131,20 +132,30 @@ class ui_states:
 
 
     @staticmethod
-    def __Get_Window():
-        window = pygame.display.get_surface()
-
-        return window
-
+    def Battle_Background(window):
+        window.fill((50, 50, 50))
 
     @staticmethod
-    def __Get_Font():
-        font = pygame.font.SysFont("monospace", 4)
+    def Charatcer_names_and_health(window, characters, font):
+        for i in range(5):
+            character = characters[f"EChar{i+1}"]
+            text = character.name
+            text = font.render(text, True, (255, 255, 255))
+            window.blit(text, (30 + (150*i), 100))
 
-        return font
+            text = str(character._health)
+            text = font.render(text, True, (255, 255, 255))
+            window.blit(text, (30 + (150*i), 130))
 
+        for i in range(5):
+            character = characters[f"PChar{i+1}"]
+            text = character.name
+            text = font.render(text, True, (255, 255, 255))
+            window.blit(text, (30 + (150*i), 400))
 
-
+            text = str(character._health)
+            text = font.render(text, True, (255, 255, 255))
+            window.blit(text, (30 + (150*i), 430))
 
 
 
