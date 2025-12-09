@@ -24,8 +24,7 @@ class Campaign_Logic:
     def Check_stage(campaign, chapter, stage, player_id):
         comp, battle_id = Database.Find_Player_Battle(campaign, chapter, stage, player_id)
 
-        if comp:
-            Campaign_Logic.start_battle(battle_id, player_id)
+        return comp, battle_id
 
     @staticmethod
     def start_battle(battle_id, player_id):
@@ -58,6 +57,9 @@ class Campaign_Logic:
         for i in range(5):
             CharDict["PChar"+str(i+1)] = Campaign_Logic.__init_Pchar(chars[i], player_id)
 
+
+        return CharDict
+
         # TempDict["EChar1"]
         # ECharacters[0]
 
@@ -78,15 +80,19 @@ class Campaign_Logic:
 
         character = Campaign_Logic.character_object_call[char](player_id)
 
+        return character
+
     @staticmethod
     def __Player_choose_chars(player_id):
         names = Database.Get_player_char_names(player_id)
+        for i in range(len(names)):
+            names[i] = names[i][0]
 
         chars = []
 
         for i in range(5):
             char, name_to_remove = Tkinter_Backend.Player_chars(names)
-            names = names.remove(name_to_remove)
+            names.remove(name_to_remove)
             chars.append(char)
 
         return chars
