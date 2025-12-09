@@ -17,19 +17,19 @@ class Cragger(Character):
         self.name = stats[1]
         stats = stats[2:]
 
-        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
+        self.__max_health = round((stats[0] * stat_multiplier) / 1000)
         self._health = self.__max_health
-        self._damage = round((stats[1] * stat_multiplier) / 100000)
-        self._evasion = round((stats[2] * stat_multiplier) / 100000)
-        self._ap = round((stats[3] * stat_multiplier) / 100000)
-        self._defense = round((stats[4] * stat_multiplier) / 100000)
-        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
-        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
+        self._damage = round((stats[1] * stat_multiplier) / 1000)
+        self._evasion = round((stats[2] * stat_multiplier) / 1000)
+        self._ap = round((stats[3] * stat_multiplier) / 1000)
+        self._defense = round((stats[4] * stat_multiplier) / 1000)
+        self._crit_chance = round((stats[5] * stat_multiplier) / 1000)
+        self._crit_damage = round((stats[6] * stat_multiplier) / 1000)
         self._accuracy = stats[7]
-        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
-        self._speed = round((stats[9] * stat_multiplier) / 100000)
-        self._potency = round((stats[10] * stat_multiplier) / 100000)
-        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
+        self._crit_avoidance = round((stats[8] * stat_multiplier) / 1000)
+        self._speed = round((stats[9] * stat_multiplier) / 1000)
+        self._potency = round((stats[10] * stat_multiplier) / 1000)
+        self._tenacity = round((stats[11] * stat_multiplier) / 1000)
 
 
 
@@ -115,19 +115,19 @@ class Gorzan(Character):
         self.name = stats[1]
         stats = stats[2:]
 
-        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
+        self.__max_health = round((stats[0] * stat_multiplier) / 1000)
         self._health = self.__max_health
-        self._damage = round((stats[1] * stat_multiplier) / 100000)
-        self._evasion = round((stats[2] * stat_multiplier) / 100000)
-        self._ap = round((stats[3] * stat_multiplier) / 100000)
-        self._defense = round((stats[4] * stat_multiplier) / 100000)
-        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
-        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
+        self._damage = round((stats[1] * stat_multiplier) / 1000)
+        self._evasion = round((stats[2] * stat_multiplier) / 1000)
+        self._ap = round((stats[3] * stat_multiplier) / 1000)
+        self._defense = round((stats[4] * stat_multiplier) / 1000)
+        self._crit_chance = round((stats[5] * stat_multiplier) / 1000)
+        self._crit_damage = round((stats[6] * stat_multiplier) / 1000)
         self._accuracy = stats[7]
-        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
-        self._speed = round((stats[9] * stat_multiplier) / 100000)
-        self._potency = round((stats[10] * stat_multiplier) / 100000)
-        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
+        self._crit_avoidance = round((stats[8] * stat_multiplier) / 1000)
+        self._speed = round((stats[9] * stat_multiplier) / 1000)
+        self._potency = round((stats[10] * stat_multiplier) / 1000)
+        self._tenacity = round((stats[11] * stat_multiplier) / 1000)
 
 
 
@@ -224,19 +224,19 @@ class Eris(Character):
         self.name = stats[1]
         stats = stats[2:]
 
-        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
+        self.__max_health = round((stats[0] * stat_multiplier) / 1000)
         self._health = self.__max_health
-        self._damage = round((stats[1] * stat_multiplier) / 100000)
-        self._evasion = round((stats[2] * stat_multiplier) / 100000)
-        self._ap = round((stats[3] * stat_multiplier) / 100000)
-        self._defense = round((stats[4] * stat_multiplier) / 100000)
-        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
-        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
+        self._damage = round((stats[1] * stat_multiplier) / 1000)
+        self._evasion = round((stats[2] * stat_multiplier) / 1000)
+        self._ap = round((stats[3] * stat_multiplier) / 1000)
+        self._defense = round((stats[4] * stat_multiplier) / 1000)
+        self._crit_chance = round((stats[5] * stat_multiplier) / 1000)
+        self._crit_damage = round((stats[6] * stat_multiplier) / 1000)
         self._accuracy = stats[7]
-        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
-        self._speed = round((stats[9] * stat_multiplier) / 100000)
-        self._potency = round((stats[10] * stat_multiplier) / 100000)
-        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
+        self._crit_avoidance = round((stats[8] * stat_multiplier) / 1000)
+        self._speed = round((stats[9] * stat_multiplier) / 1000)
+        self._potency = round((stats[10] * stat_multiplier) / 1000)
+        self._tenacity = round((stats[11] * stat_multiplier) / 1000)
 
 
 
@@ -339,19 +339,19 @@ class Razar(Character):
         self.name = stats[1]
         stats = stats[2:]
 
-        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
+        self.__max_health = round((stats[0] * stat_multiplier) / 1000)
         self._health = self.__max_health
-        self._damage = round((stats[1] * stat_multiplier) / 100000)
-        self._evasion = round((stats[2] * stat_multiplier) / 100000)
-        self._ap = round((stats[3] * stat_multiplier) / 100000)
-        self._defense = round((stats[4] * stat_multiplier) / 100000)
-        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
-        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
+        self._damage = round((stats[1] * stat_multiplier) / 1000)
+        self._evasion = round((stats[2] * stat_multiplier) / 1000)
+        self._ap = round((stats[3] * stat_multiplier) / 1000)
+        self._defense = round((stats[4] * stat_multiplier) / 1000)
+        self._crit_chance = round((stats[5] * stat_multiplier) / 1000)
+        self._crit_damage = round((stats[6] * stat_multiplier) / 1000)
         self._accuracy = stats[7]
-        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
-        self._speed = round((stats[9] * stat_multiplier) / 100000)
-        self._potency = round((stats[10] * stat_multiplier) / 100000)
-        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
+        self._crit_avoidance = round((stats[8] * stat_multiplier) / 1000)
+        self._speed = round((stats[9] * stat_multiplier) / 1000)
+        self._potency = round((stats[10] * stat_multiplier) / 1000)
+        self._tenacity = round((stats[11] * stat_multiplier) / 1000)
 
 
     def GetHealth(self):
@@ -456,19 +456,19 @@ class Rinona(Character):
         self.name = stats[1]
         stats = stats[2:]
 
-        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
+        self.__max_health = round((stats[0] * stat_multiplier) / 1000)
         self._health = self.__max_health
-        self._damage = round((stats[1] * stat_multiplier) / 100000)
-        self._evasion = round((stats[2] * stat_multiplier) / 100000)
-        self._ap = round((stats[3] * stat_multiplier) / 100000)
-        self._defense = round((stats[4] * stat_multiplier) / 100000)
-        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
-        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
+        self._damage = round((stats[1] * stat_multiplier) / 1000)
+        self._evasion = round((stats[2] * stat_multiplier) / 1000)
+        self._ap = round((stats[3] * stat_multiplier) / 1000)
+        self._defense = round((stats[4] * stat_multiplier) / 1000)
+        self._crit_chance = round((stats[5] * stat_multiplier) / 1000)
+        self._crit_damage = round((stats[6] * stat_multiplier) / 1000)
         self._accuracy = stats[7]
-        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
-        self._speed = round((stats[9] * stat_multiplier) / 100000)
-        self._potency = round((stats[10] * stat_multiplier) / 100000)
-        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
+        self._crit_avoidance = round((stats[8] * stat_multiplier) / 1000)
+        self._speed = round((stats[9] * stat_multiplier) / 1000)
+        self._potency = round((stats[10] * stat_multiplier) / 1000)
+        self._tenacity = round((stats[11] * stat_multiplier) / 1000)
 
     def GetHealth(self):
         return self._health
@@ -570,19 +570,19 @@ class Laval(Character):
         self.name = stats[1]
         stats = stats[2:]
 
-        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
+        self.__max_health = round((stats[0] * stat_multiplier) / 1000)
         self._health = self.__max_health
-        self._damage = round((stats[1] * stat_multiplier) / 100000)
-        self._evasion = round((stats[2] * stat_multiplier) / 100000)
-        self._ap = round((stats[3] * stat_multiplier) / 100000)
-        self._defense = round((stats[4] * stat_multiplier) / 100000)
-        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
-        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
+        self._damage = round((stats[1] * stat_multiplier) / 1000)
+        self._evasion = round((stats[2] * stat_multiplier) / 1000)
+        self._ap = round((stats[3] * stat_multiplier) / 1000)
+        self._defense = round((stats[4] * stat_multiplier) / 1000)
+        self._crit_chance = round((stats[5] * stat_multiplier) / 1000)
+        self._crit_damage = round((stats[6] * stat_multiplier) / 1000)
         self._accuracy = stats[7]
-        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
-        self._speed = round((stats[9] * stat_multiplier) / 100000)
-        self._potency = round((stats[10] * stat_multiplier) / 100000)
-        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
+        self._crit_avoidance = round((stats[8] * stat_multiplier) / 1000)
+        self._speed = round((stats[9] * stat_multiplier) / 1000)
+        self._potency = round((stats[10] * stat_multiplier) / 1000)
+        self._tenacity = round((stats[11] * stat_multiplier) / 1000)
 
 
 
