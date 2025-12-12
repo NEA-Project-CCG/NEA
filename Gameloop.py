@@ -1,8 +1,8 @@
 import pygame
-from UI import initial_UI, draw_window, draw_battle
-import re
+from UI import initial_UI, draw_window
 from Campaign_logic import Campaign_Logic
 from Pygame_clicks_logic import LMB
+from Battle_Loop import Battle_Loop
 
 
 class Gameloop:
@@ -12,6 +12,8 @@ class Gameloop:
         campaign_re = "campaign_"
 
         state = "hub"
+
+        battling = False
 
         lmb = 1
 
@@ -35,7 +37,7 @@ class Gameloop:
                             comp, Battle_id = Campaign_Logic.Check_stage(state[Campaign_index], state[Chapter_index], state[Stage_index], Player_id)
                             if comp:
                                 Characters = Campaign_Logic.start_battle(Battle_id, Player_id)
-                                state = "battle"
+                                battling = True
 
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -44,8 +46,8 @@ class Gameloop:
 
 
 
-                if state == "battle":
-                    draw_battle(window, Characters)
+                if battling:
+                    Battle_Loop.the_loop(window, Characters)
                 else:
                     draw_window(window, state, font, campaign_re)
 
