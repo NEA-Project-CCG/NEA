@@ -165,7 +165,7 @@ class Database:
         return character_id
 
     @staticmethod
-    def Create_new_player(Player_id):
+    def Create_new_player_Chars(Player_id):
 
         char_ids = Database.__Get_Character_ids()
 
@@ -185,5 +185,37 @@ class Database:
         conn.commit()
         conn.close()
 
+    @staticmethod
+    def Create_new_player_Campigns(player_id):
+
+        num_of_battles = Database.how_many_battles()
+
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+
+        for i in range(num_of_battles):
+            cursor.execute("""INSERT INTO Campaigns_Player 
+                              VALUES (?, ?, False, False);""",
+                           (player_id, i))
+
+        cursor.execute("""UPDATE Campaigns_Player 
+                          SET Prev_completed = True 
+                          WHERE Battle_id = 0""")
+
+        conn.commit()
+        conn.close()
+
+    @staticmethod
+    def how_many_battles() -> int:
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""SELECT Battle_id FROM Campaigns""")
+        battles = cursor.fetchall()
+        battle_nums = len(battles)
+
+        conn.close()
+
+        return battle_nums
+
 if __name__ == '__main__':
-    Database.Create_new_player(0)
+    Database.Create_new_player_Campigns(0)
