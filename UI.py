@@ -34,6 +34,7 @@ def draw_battle(window, characters):
     ui_states.Charatcer_names_and_health(window, characters, font)
 
 
+
     pygame.display.flip()
 
 
@@ -43,5 +44,16 @@ def draw_battle(window, characters):
 
 
 
+
+    return window
+
+def Draw_abilities(window):
+    font = pygame.font.Font(pygame.font.get_default_font(), 20)
+    abilites = ["Basic", "Special", "Ultimate"]
+    for i in range(3):
+        text = abilites[i]
+        text = font.render(text, True, (255,255,255))
+        pygame.draw.rect(window, (50,50,50), pygame.Rect(i*250 + 50, 560, 200, 20))
+        window.blit(text, (i*250 + 100, 560))
 
     return window
