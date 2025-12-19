@@ -36,7 +36,6 @@ class Speed_Queue:
             index = self.__speeds[0][1]
             self.__Character_for_turn = self.__chars[index]
             self.__speeds[index][0] = 0
-            print("working")
         else:
             self.speed_turn()
 
