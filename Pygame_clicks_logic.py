@@ -15,6 +15,19 @@ class LMB:
             state = LMB.inside_a_campaign(pos_x, pos_y, state)
         return state
 
+    @staticmethod
+    def click_attack(pos_x, pos_y):
+        start_x = 50
+        end_x = 250
+        y_top = 560
+        y_bottom = 580
+
+        if pos_y > y_top and pos_y < y_bottom:
+            for i in range(3):
+                if pos_x > start_x + i*250 and pos_x < end_x + i*250:
+                    pass
+
+
 
 
     @staticmethod
