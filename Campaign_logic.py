@@ -1,6 +1,8 @@
 from Tkinter_Backend import Tkinter_Backend
 from Ninjago_Characters import *
 from Chima_Characters import *
+from random import randint
+from Character_leveling import Char_upgrading
 
 class Campaign_Logic:
 
@@ -27,7 +29,7 @@ class Campaign_Logic:
         return comp, battle_id
 
     @staticmethod
-    def start_battle(battle_id, player_id):
+    def battle(battle_id, player_id):
 
         Campaign_chars = Database.Get_Campaign_Chars(battle_id)
 
@@ -99,6 +101,16 @@ class Campaign_Logic:
 
 
 
+    @staticmethod
+    def campaign_reward(battle_id):
+        rand_reward = randint(0, 1)
+        if rand_reward == 0:
+            return False
+
+        char_id = Database.node_reward(battle_id)
+        got_char = Database.has_char(char_id)
+        if got_char:
+            Char_upgrading.upgrade_existing_char(char_id, player_id)
 
 
 
