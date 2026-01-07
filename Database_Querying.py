@@ -217,5 +217,38 @@ class Database:
 
         return battle_nums
 
+
+    @staticmethod
+    def node_reward(battle_id):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""SELECT Char_id_reward from Campaigns
+                       WHERE battle_id = ?;""", [battle_id])
+        char_id = cursor.fetchone()[0]
+        conn.close()
+        return char_id
+
+    @staticmethod
+    def has_char(char_id):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""SELECT Star FROM Player_Table WHERE Character_id = ?;""",[char_id])
+        got_char = cursor.fetchone()[0]
+        conn.close()
+        if got_char > 0:
+            return True
+        return False
+
+    @staticmethod
+    def return_level_and_tokens(player_id, char_id):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""SELECT Level, Level_tokens FROM Player_Table WHERE Player_id = ? AND Character_id = ?;""",(player_id, char_id))
+        db_get = cursor.fetchone()
+        level = db_get[0]
+        level_tokens = db_get[1]
+        conn.close()
+        return level, level_tokens
+
 if __name__ == '__main__':
     Database.Create_new_player_Campigns(0)
