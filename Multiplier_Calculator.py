@@ -49,3 +49,11 @@ class Multiplier:
     def star_multiplier(star):
         star_m = star**3
         return star_m
+
+    @staticmethod
+    def EXP_Calculator(Chapter, Stage):
+        exp1 = Stage * 100
+        exp2 = (Chapter**Chapter) * 100
+        total_exp = exp1 + exp2
+        return total_exp
+
