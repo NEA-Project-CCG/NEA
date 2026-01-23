@@ -112,7 +112,7 @@ from random import randint
 
 class Battle_Calculators:
     @staticmethod
-    def Damage_calculator(damage: int, offense: int, ap: int, crit_chance: int, crit_damage: int, ability_modifier: int, buffs: list[int], debuffs:  list[int], accuracy: int, crit_avoidance: int, defense: int, evasion: int, testing: bool = False) -> int:
+    def Damage_calculator(damage: int, offense: int, ap: int, crit_chance: int, crit_damage: int, ability_modifier: int, buffs: list[str], debuffs:  list[str], accuracy: int, crit_avoidance: int, defense: int, evasion: int, testing: bool = False) -> int:
 
         #applies buffs to stats
         for buff in buffs:
@@ -195,6 +195,7 @@ class Battle_Calculators:
         if crit_chance < 0:
             crit_bool: bool = False
 
+        #calculates critical hit
         else:
             crit_rand: int = 100 if testing else randint(0, 100)
             if crit_chance < crit_rand:
@@ -202,9 +203,11 @@ class Battle_Calculators:
             else:
                 crit_bool = True
 
+        #calculates crit damage
         if crit_bool:
             damage = round((damage * crit_damage) / 100)
 
+        #calculates armour penetration
         calc_defense = defense - ap
         if calc_defense < 0:
 
@@ -221,7 +224,7 @@ class Battle_Calculators:
 
 
     @staticmethod
-    def Debuff_Calculator(potency: int, tenacity: int, buffs: list[int], debuffs: list[int], evasion: int, accuracy: int, debuffs_to_be_applied: list[int], rdebuffs) -> list[int]:
+    def Debuff_Calculator(potency: int, tenacity: int, buffs: list[str], debuffs: list[str], evasion: int, accuracy: int, debuffs_to_be_applied: list[str], rdebuffs: list[str]) -> list[str]:
         #applies buffs
         for buff in buffs:
             #checks if buff is accuracy up
@@ -242,21 +245,21 @@ class Battle_Calculators:
 
 
         #applies debuffs
-        for defbuff in debuffs:
+        for debuff in debuffs:
             #checks if debuff is accuracy down
-            if defbuff == "accuracy down":
+            if debuff == "accuracy down":
                 accuracy = round((accuracy * 50) / 100)
 
             #checks if debuff is evasion down
-            if defbuff == "evasion down":
+            if debuff == "evasion down":
                 evasion = round((evasion * 50) / 100)
 
             #checks if debuff is potency down
-            if defbuff == "potency down":
+            if debuff == "potency down":
                 potency = round((potency * 50) / 100)
 
             #checks if debuff is tenacity down
-            if defbuff == "tenacity down":
+            if debuff == "tenacity down":
                 tenacity = round((tenacity * 50) / 100)
 
 
@@ -269,13 +272,16 @@ class Battle_Calculators:
             return rdebuffs
 
 
-
+        #calculates potency
         calc_pot = potency - tenacity
         if calc_pot < 0:
             return rdebuffs
+
+        #calculates whether the potency works
         rand_pot =  randint(0, 100)
         if calc_pot < rand_pot:
             return rdebuffs
+        #applies debuffs
         for application in debuffs_to_be_applied:
             rdebuffs.append(application)
 
@@ -288,10 +294,11 @@ class Battle_Calculators:
         return rdebuffs
 
     @staticmethod
-    def Buff_calculator(buffs: list[int], buffs_to_be_applied: list[int]) -> list[int]:
+    def Buff_calculator(buffs: list[str], buffs_to_be_applied: list[str]) -> list[str]:
         for application in buffs_to_be_applied:
             buffs.append(application)
 
+        #applies buffs
         buffs_set = set(buffs)
         buffs = []
         for buff in buffs_set:
@@ -301,7 +308,9 @@ class Battle_Calculators:
         return buffs
 
     @staticmethod
-    def resolve_damage_buffs(buffs, debuffs, other_buffs, other_debuffs):
+    def resolve_damage_buffs(buffs: list[str], debuffs: list[str], other_buffs: list[str], other_debuffs: list[str]) -> list[list[str], list[str]]:
+        #formats buffs and debuffs in a way for the damage calculator
+
         enemy_calc_buffs = []
         for buff in buffs:
             if buff not in ["offense up", "accuracy up", "crit chance up", "crit damage up", "potency up"]:
