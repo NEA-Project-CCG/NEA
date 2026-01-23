@@ -51,7 +51,7 @@ class Campaign_Logic:
         # Echaracter4 = Campaign_Logic.__init_char(Enemy_battle[3], multiplier)
         # Echaracter5 = Campaign_Logic.__init_char(Enemy_battle[4], multiplier)
 
-        CharDict = {}
+        CharDict: dict[Character] = {}
         for i in range(5):
             CharDict["EChar"+str(i+1)] = Campaign_Logic.__init_Echar(Campaign_chars[i], multiplier)
 
@@ -102,15 +102,22 @@ class Campaign_Logic:
 
 
     @staticmethod
-    def campaign_reward(battle_id):
-        rand_reward = randint(0, 1)
+    def campaign_reward(battle_id, player_id, chars):
+        rand_reward = randint(0, 10)
         if rand_reward == 0:
-            return False
+            return True
 
         char_id = Database.node_reward(battle_id)
         got_char = Database.has_char(char_id)
-        if got_char:
-            Char_upgrading.upgrade_existing_char(char_id, player_id)
+        if not got_char:
+            Char_upgrading.Unlock_char(player_id, char_id)
+
+        Chapter, Stage = Database.Stage_and_Chapter_from_id(battle_id)
+
+        exp = Multiplier.EXP_Calculator(Chapter, Stage)
+
+
+
 
 
 
