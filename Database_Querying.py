@@ -250,5 +250,73 @@ class Database:
         conn.close()
         return level, level_tokens
 
+    @staticmethod
+    def increase_star(Player_id, char_id, level_tokens, star):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""UPDATE Player_Table SET Star = ? + 1, Level_tokens = ? - 7 WHERE Player_id = ? AND Character_id = ?;""",[star, level_tokens, Player_id, char_id])
+        conn.commit()
+        conn.close()
+
+    @staticmethod
+    def return_star(player_id, char_id):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""SELECT Star FROM PLayer_TABLE WHERE Character_id = ? AND Player_id = ?;""",(char_id, player_id))
+        db_get = cursor.fetchone()
+        star = db_get[0]
+        conn.close()
+        return star
+
+    @staticmethod
+    def return_gear(player_id, char_id):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""SELECT Gear FROM PLayer_TABLE WHERE Character_id = ? AND Player_id = ?;""",(char_id, player_id))
+        db_get = cursor.fetchone()
+        gear = db_get[0]
+        conn.close()
+        return gear
+
+    @staticmethod
+    def increase_gear(Player_id, char_id, gear, level_tokens):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""UPDATE Player_Table
+                          SET Gear         = ? + 1,
+                              Level_tokens = ? - 4
+                          WHERE Player_id = ?
+                            AND Character_id = ?;""", [gear, level_tokens, Player_id, char_id])
+        conn.commit()
+        conn.close()
+
+    @staticmethod
+    def return_level(player_id, char_id):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""SELECT Level FROM Player_Table WHERE Player_id = ? AND Character_id = ?;""",(player_id, char_id))
+        db_get = cursor.fetchone()
+        level = db_get[0]
+        conn.close()
+        return level
+
+    @staticmethod
+    def Stage_and_Chapter_from_id(battle_id):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""SELECT Chapter_id, Stage_id FROM Campaigns WHERE Battle_id = ?;""",(battle_id,))
+        db_get = cursor.fetchone()
+        chapter = db_get[0]
+        stage = db_get[1]
+        conn.close()
+        return chapter, stage
+
+    @staticmethod
+    def add_exp(player_id, char_id, exp):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""UPDATE Player_Table SET""")
+
 if __name__ == '__main__':
     Database.Create_new_player_Campigns(0)
+
