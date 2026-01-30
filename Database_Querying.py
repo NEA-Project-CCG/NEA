@@ -317,6 +317,56 @@ class Database:
         cursor = conn.cursor()
         cursor.execute("""UPDATE Player_Table SET""")
 
+
+    @staticmethod
+    def return_Journey_reqs(Journey_id):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""SELECT Char_1_id, Char_2_id, Char_3_id, Char_4_id, Char_5_id, Gear_req, Star_req FROM Journey_reqs WHERE Journey_id = ?;""",(Journey_id,))
+        db_get = cursor.fetchone()
+        conn.close()
+        return db_get
+
+    @staticmethod
+    def Journey_reward(Journey_id):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""SELECT Char_id_reward FROM Campaigns WHERE Campaign_id = ? AND Chapter_id = 1 AND Stage_id = 6;""", (Journey_id,))
+        db_get = cursor.fetchone()[0]
+        conn.close()
+        return db_get
+
+    @staticmethod
+    def reqs_completed(Journey_id, Player_id):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""  UPDATE Campaigns_Player
+                            SET Prev_completed = 1 
+                            WHERE Battle_id = (SELECT Battle_id FROM Campaigns
+                                WHERE Campaigns_Player.Player_id = ? 
+                            AND Campaigns.Campaign_id = ?
+                            AND Campaigns.Chapter_id = 1
+                            AND Campaigns.Stage_id = 1);
+                            """, (Player_id,Journey_id,))
+
+    @staticmethod
+    def names_in_collected(player_id):
+        conn = sqlite3.connect('NEA Database.db')
+        cursor = conn.cursor()
+        cursor.execute("""SELECT Character_Name, Collected FROM Player_Table, General_character 
+                            WHERE Player_id = ? 
+                            AND Player_Table.Character_id = General_Character.Character_ID 
+                            ORDER BY Collected DESC,Level DESC;""",(player_id,))
+
+        Names = cursor.fetchall()
+        names = []
+        for i in range(len(Names)):
+            names.append(Names[i])
+
+        conn.close()
+        return names
+
 if __name__ == '__main__':
     Database.Create_new_player_Campigns(0)
+
 
