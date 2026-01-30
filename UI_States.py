@@ -1,25 +1,27 @@
 import re
 import pygame
 
+from Multiplier_Calculator import Multiplier
+from Database_Querying import Database
 from Tkinter_Backend import Tkinter_Backend
 
 class ui_states:
     @staticmethod
-    def select_state(window, state, font, campaign_re):
+    def select_state(window, state, font, campaign_re, player_id):
         chapter_index = 11
         if state == "hub":
             ui_states.__state_hub(window, font)
 
-        if state == "characters":
-            ui_states.__state_characters(window)
+        elif state == "characters":
+            ui_states.__state_characters_back(window, player_id)
 
-        if state == "journey guide":
+        elif state == "journey guide":
             ui_states.__state_journey_guide(window)
 
-        if state == "campaigns":
+        elif state == "campaigns":
             ui_states.__state_campaigns(window, font)
 
-        if re.match(campaign_re, state):
+        elif re.match(campaign_re, state):
             ui_states.__state_campaign_base(window, font)
             if state[chapter_index] == "1":
                 ui_states.__state_campaign_chapter_1(window, font)
@@ -28,6 +30,58 @@ class ui_states:
             elif state[chapter_index] == "3":
                 ui_states.__state_campaign_chapter_3(window, font)
 
+        else:
+            ui_states.__Character_state(player_id, state, window)
+
+    @staticmethod
+    def __Character_state(player_id, state, window):
+
+
+
+
+        font = pygame.font.Font(pygame.font.get_default_font(), 20)
+        window.fill((125, 125, 125))
+
+        pygame.draw.rect(window, (41, 103, 204), pygame.Rect(10, 10, 30, 30))
+        text = state
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (375, 550))
+
+        char_id = Database.Char_id_from_name(state)
+        level, tokens = Database.return_level_and_tokens(player_id, char_id)
+        star = Database.return_star(player_id, char_id)
+        gear = Database.return_gear(player_id, char_id)
+
+        text = f"Level: {str(level)}"
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (20, 50))
+
+        text = f"Tokens: {str(tokens)}"
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (140, 50))
+
+        text = f"Gear: {str(gear)}"
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (580, 50))
+
+        text = f"Star: {str(star)}"
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (670, 50))
+
+        if tokens >=5:
+            text = f"Upgrade"
+            text = font.render(text, True, (255, 255, 255))
+            window.blit(text, (580, 80))
+
+        if tokens >=7:
+            text = f"Upgrade"
+            text = font.render(text, True, (255, 255, 255))
+            window.blit(text, (670, 80))
+
+        multiplier = Multiplier.calculate_stats_player(player_id, char_id)
+        text = f"Multiplier: {str(multiplier)}"
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (325, 300))
 
 
     @staticmethod
@@ -45,15 +99,30 @@ class ui_states:
 
         pygame.draw.rect(window, (0, 255, 0), pygame.Rect(375, 0, 425, 600))
         text = "Campaigns"
-        text = font.render(text, True, (255, 255, 255))
+        text = font.render(text, True, (255, 254, 255))
         window.blit(text, (415, 550))
 
 
     #Characters screen
     @staticmethod
-    def __state_characters(window):
-        window.fill((0, 0, 255))
+    def __state_characters_back(window, player_id):
+        window.fill((0, 0, 254))
         pygame.draw.rect(window, (41, 103, 204), pygame.Rect(10, 10, 30, 30))
+        ui_states.__State_Characters(window, player_id)
+
+
+    @staticmethod
+    def __State_Characters(window, player_id):
+        font = pygame.font.Font(pygame.font.get_default_font(), 20)
+        names = Database.names_in_collected(player_id)
+        j = 6
+        for i in range(len(names)):
+            pygame.draw.rect(window, (255*(1-names[i][1]), 255*(names[i][1]), 0), pygame.Rect(20 + (130*(i%j)), 50 + 80*(i//j), 100, 60))
+            text = names[i][0]
+            text = font.render(text, True, (255, 255, 255))
+            window.blit(text,(30 + (130*(i%j)), 60 + 80*(i//j) ))
+
+
 
 
     #Journey Guide screen
@@ -143,7 +212,7 @@ class ui_states:
             text = font.render(text, True, (255, 255, 255))
             window.blit(text, (30 + (150*i), 100))
 
-            text = str(character._health)
+            text = str(character.GetHealth())
             text = font.render(text, True, (255, 255, 255))
             window.blit(text, (30 + (150*i), 130))
 
@@ -153,7 +222,7 @@ class ui_states:
             text = font.render(text, True, (255, 255, 255))
             window.blit(text, (30 + (150*i), 400))
 
-            text = str(character._health)
+            text = str(character.GetSpeed())
             text = font.render(text, True, (255, 255, 255))
             window.blit(text, (30 + (150*i), 430))
 
