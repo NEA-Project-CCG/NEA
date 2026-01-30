@@ -1,18 +1,22 @@
 import pygame
 import re
 from Campaign_logic import Campaign_Logic
+from Database_Querying import Database
+from Character_leveling import Char_upgrading
 
 
 class LMB:
 
     @staticmethod
-    def clicked_state(state, campaign_re, pos_x, pos_y):
+    def clicked_state(state, campaign_re, pos_x, pos_y, player_id):
         if state == "hub":
             state = LMB.in_hub(pos_x, pos_y, state)
         elif state in ["journey guide", "campaigns", "characters"]:
-            state = LMB.in_hub_level_1(pos_x, pos_y, state)
+            state = LMB.in_hub_level_1(pos_x, pos_y, state, player_id)
         elif re.match(campaign_re, state):
             state = LMB.inside_a_campaign(pos_x, pos_y, state)
+        else:
+            state = LMB.in_char(pos_x, pos_y, state, player_id)
         return state
 
     @staticmethod
@@ -46,15 +50,30 @@ class LMB:
         return state
 
     @staticmethod
-    def in_hub_level_1(pos_x, pos_y, state):
+    def in_hub_level_1(pos_x, pos_y, state, player_id):
         if pos_x >= 10 and pos_y >= 10 and pos_x <= 40 and pos_y <= 40:
             state = "hub"
 
         elif state == "campaigns":
             state = LMB.in_campaigns(pos_x, pos_y, state)
 
+        elif state == "characters":
+            state = LMB.choosing_char(pos_x,pos_y, state, player_id)
+
         return state
 
+
+    @staticmethod
+    def choosing_char(pos_x, pos_y, state, player_id):
+        names = Database.names_in_collected(player_id)
+        j = 6
+        for i in range(len(names)):
+            if pos_y > 50 + 80*(i//j) and pos_y < 110 + 80*(i//j):
+                if pos_x > 20 + (130*(i%j)) and pos_x < 120 + (130*(i%j)):
+                    state = names[i][0]
+                    print(state)
+
+        return state
 
     @staticmethod
     def in_campaigns(pos_x, pos_y, state):
@@ -101,4 +120,17 @@ class LMB:
 
         return state
 
+    @staticmethod
+    def in_char(pos_x, pos_y, state, player_id):
+        if pos_x >= 10 and pos_y >= 10 and pos_x <= 40 and pos_y <= 40:
+            state = "characters"
 
+        elif pos_x >= 670 and pos_x <= 750 and pos_y >= 80 and pos_y <= 110:
+            char_id = Database.Char_id_from_name(state)
+            Char_upgrading.Upgrade_star(char_id, player_id)
+
+        elif pos_x >= 580 and pos_x <= 660 and pos_y >= 80 and pos_y <= 110:
+            char_id = Database.Char_id_from_name(state)
+            Char_upgrading.Upgrade_gear(char_id, player_id)
+
+        return state
