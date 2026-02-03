@@ -47,7 +47,10 @@ class Gameloop:
 
 
                 if battling:
-                    Battle_Loop.the_loop(window, Characters)
+
+                    Battle, Team1, Team2, list_of_chars, queue = Battle_Loop.Startup(window, Characters)
+                    while battling:
+                        battling = Battle_Loop.the_loop(window, Battle, Team1, Team2, list_of_chars, queue, Characters)
                 else:
                     draw_window(window, state, font, campaign_re)
 
