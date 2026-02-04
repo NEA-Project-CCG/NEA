@@ -204,15 +204,16 @@ class ui_states:
     def Battle_Background(window):
         window.fill((50, 50, 50))
 
+   
     @staticmethod
-    def Charatcer_names_and_health(window, characters, font):
+    def init_Charatcer_names_and_health(window, characters, font):
         for i in range(5):
             character = characters[f"EChar{i+1}"]
             text = character.name
             text = font.render(text, True, (255, 255, 255))
             window.blit(text, (30 + (150*i), 100))
 
-            text = str(character.GetHealth())
+            text = str(character._health)
             text = font.render(text, True, (255, 255, 255))
             window.blit(text, (30 + (150*i), 130))
 
@@ -222,9 +223,39 @@ class ui_states:
             text = font.render(text, True, (255, 255, 255))
             window.blit(text, (30 + (150*i), 400))
 
-            text = str(character.GetSpeed())
+            text = str(character._health)
             text = font.render(text, True, (255, 255, 255))
             window.blit(text, (30 + (150*i), 430))
+
+    @staticmethod
+    def Charatcer_names_and_health(window, characters, font):
+        change = len(characters[0].team_that_owns_me.team)
+
+
+        for i in range(change):
+            character = characters[i].character
+            text = character.name
+            text = font.render(text, True, (255, 255, 255))
+            window.blit(text, (30 + (150 * i), 400))
+
+            text = str(character._health)
+            text = font.render(text, True, (255, 255, 255))
+            window.blit(text, (30 + (150 * i), 430))
+
+
+        j = 0
+        for i in range(change, len(characters)):
+            character = characters[i].character
+            text = character.name
+            text = font.render(text, True, (255, 255, 255))
+            window.blit(text, (30 + (150 * j), 100))
+
+            text = str(character._health)
+            text = font.render(text, True, (255, 255, 255))
+            window.blit(text, (30 + (150 * j), 130))
+
+            j +=1
+
 
 
 
