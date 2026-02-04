@@ -33,58 +33,6 @@ class ui_states:
         else:
             ui_states.__Character_state(player_id, state, window)
 
-
-     @staticmethod
-    def init_Charatcer_names_and_health(window, characters, font):
-        for i in range(5):
-            character = characters[f"EChar{i+1}"]
-            text = character.name
-            text = font.render(text, True, (255, 255, 255))
-            window.blit(text, (30 + (150*i), 100))
-
-            text = str(character._health)
-            text = font.render(text, True, (255, 255, 255))
-            window.blit(text, (30 + (150*i), 130))
-
-        for i in range(5):
-            character = characters[f"PChar{i+1}"]
-            text = character.name
-            text = font.render(text, True, (255, 255, 255))
-            window.blit(text, (30 + (150*i), 400))
-
-            text = str(character._health)
-            text = font.render(text, True, (255, 255, 255))
-            window.blit(text, (30 + (150*i), 430))
-
-    @staticmethod
-    def Charatcer_names_and_health(window, characters, font):
-        change = len(characters[0].team_that_owns_me.team)
-
-
-        for i in range(change):
-            character = characters[i].character
-            text = character.name
-            text = font.render(text, True, (255, 255, 255))
-            window.blit(text, (30 + (150 * i), 400))
-
-            text = str(character._health)
-            text = font.render(text, True, (255, 255, 255))
-            window.blit(text, (30 + (150 * i), 430))
-
-
-        j = 0
-        for i in range(change, len(characters)):
-            character = characters[i].character
-            text = character.name
-            text = font.render(text, True, (255, 255, 255))
-            window.blit(text, (30 + (150 * j), 100))
-
-            text = str(character._health)
-            text = font.render(text, True, (255, 255, 255))
-            window.blit(text, (30 + (150 * j), 130))
-
-            j +=1
-
     @staticmethod
     def __Character_state(player_id, state, window):
 
@@ -277,7 +225,6 @@ class ui_states:
             text = str(character.GetSpeed())
             text = font.render(text, True, (255, 255, 255))
             window.blit(text, (30 + (150*i), 430))
-
 
 
 
