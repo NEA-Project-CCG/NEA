@@ -31,7 +31,7 @@ class Char_upgrading:
         if level_tokens >= 5:
             gear = Database.return_gear(player_id, char_id)
             if gear < 10:
-                Database.increase_gear(player_id, char_id, gear)
+                Database.increase_gear(player_id, char_id, gear, level_tokens)
                 return True
             return False
         return False
@@ -40,4 +40,4 @@ class Char_upgrading:
 
 
 if __name__ == '__main__':
-    Char_upgrading.Upgrade_star(6,0)
+    Char_upgrading.Upgrade_char(6,0)
