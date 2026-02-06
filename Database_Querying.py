@@ -336,18 +336,24 @@ class Database:
         conn.close()
         return db_get
 
-    @staticmethod
+     @staticmethod
     def reqs_completed(Journey_id, Player_id):
         conn = sqlite3.connect('NEA Database.db')
         cursor = conn.cursor()
+        cursor.execute("""SELECT Battle_id FROM Campaigns
+                            WHERE Campaigns.Campaign_id = ?
+                            AND Campaigns.Chapter_id = 1
+                            AND Campaigns.Stage_id = 1;""", [Journey_id])
+
+        battle_id = cursor.fetchone()[0]
         cursor.execute("""  UPDATE Campaigns_Player
                             SET Prev_completed = 1 
-                            WHERE Battle_id = (SELECT Battle_id FROM Campaigns
-                                WHERE Campaigns_Player.Player_id = ? 
-                            AND Campaigns.Campaign_id = ?
-                            AND Campaigns.Chapter_id = 1
-                            AND Campaigns.Stage_id = 1);
-                            """, (Player_id,Journey_id,))
+                            WHERE Player_id = ?
+                            AND Battle_id = ?;
+                            """, [Player_id, battle_id])
+
+        conn.commit()
+        conn.close()
 
     @staticmethod
     def names_in_collected(player_id):
@@ -368,5 +374,6 @@ class Database:
 
 if __name__ == '__main__':
     Database.Create_new_player_Campigns(0)
+
 
 
