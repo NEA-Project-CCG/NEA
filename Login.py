@@ -4,6 +4,7 @@ import re
 import string
 import sqlite3
 from random import randint
+from Database_Querying import Database
 
 class safety_login:
     def __init__(self):
@@ -47,14 +48,9 @@ class safety_login:
         self.__password = self.__enter_password.get()
         if re.match(self.__Upattern, self.__username):
             self.__username += self.__pepper_user
-            conn = sqlite3.connect("NEA Database.db")
-            cursor = conn.cursor()
             self.__username = hashlib.sha3_512(bytes(self.__username, 'utf-8')).hexdigest()
-            print(self.__username)
-            cursor.execute('''SELECT Password FROM User WHERE Email = (?)''', [self.__username])
-            self.__password_hash = cursor.fetchone()[0]
-            print(self.__password_hash)
-            conn.close()
+
+            self.__password_hash = Database.password(self.__username)
         else:
             return False
         if(re.search(self.__Ppattern, self.__password)):
@@ -81,13 +77,9 @@ class safety_login:
 
 
         self.__accepted = False
-        conn = sqlite3.connect("NEA Database.db")
-        cursor = conn.cursor()
-        cursor.execute("SELECT Player_ID FROM User WHERE Email = (?)", [self.__username])
 
-        self.player_id = cursor.fetchone()[0]
+        self.Player_id = Database.get_player_id(self.__username, checker)
 
-        conn.close()
         self.__root.destroy()
 
 
@@ -152,16 +144,7 @@ class safety_login:
 
     def __check_validity(self):
 
-        conn = sqlite3.connect("NEA Database.db")
-
-        cursor = conn.cursor()
-
-        cursor.execute('''SELECT Email FROM User''')
-
-        fetched = cursor.fetchall()
-        list_of_emails = []
-        for i in range(len(fetched)):
-            list_of_emails.append(fetched[i][0])
+        list_of_emails = Database.all_emails()
 
         self.__username = self.__enter_username.get()
         self.__password = self.__enter_password.get()
@@ -201,24 +184,15 @@ class safety_login:
         else:
             return False
 
-        conn.close()
 
     def __update(self):
 
         self.__root.destroy()
 
-        conn = sqlite3.connect("NEA Database.db")
-
-        cursor = conn.cursor()
-
         email_input = self.__username_new
         password_input = self.__password_new
 
-        cursor.execute('''INSERT INTO User(Email, Password) VALUES(?, ?)''', [email_input, password_input])
-
-        conn.commit()
-
-        conn.close()
+        Database.New_user(email_input, password_input)
 
         self.begin()
 
