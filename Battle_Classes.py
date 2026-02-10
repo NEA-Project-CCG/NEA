@@ -2,35 +2,37 @@
 
 class BattleField:
     def __init__(self):
-        self.__battlefield: list[Team] = []
+        self.battlefield: list[Team] = []
         self.__player_team = 0
         self.__enemy_team = 1
 
     def check_victory(self) -> bool:
-        if self.__battlefield[self.__player_team].team != [] and self.__battlefield[self.__enemy_team].team == []:
-            self.__reset_battlefield()
-            print("victory")
+        if self.battlefield[self.__player_team].team != [] and self.battlefield[self.__enemy_team].team == []:
             return True
         return False
 
     def check_defeat(self) -> bool:
-        if self.__battlefield[self.__player_team] == [] and self.__battlefield[self.__enemy_team] != []:
-            self.__reset_battlefield()
-            print("lose")
+        if self.battlefield[self.__player_team].team == [] and self.battlefield[self.__enemy_team].team != []:
             return True
         return False
 
     def add_team(self, team):
-        self.__battlefield.append(team)
-
-
-    def __reset_battlefield(self):
-        self.__battlefield = []
+        self.battlefield.append(team)
 
     def display_battlefield(self):
         for i in range(2):
             print(f"Team {i + 1}:")
-            self.__battlefield[i]._display_team()
+            self.battlefield[i]._display_team()
+
+    def opposing_team(self):
+        index = self.queue._speeds[9][1]
+        if index >= 5:
+            return self.battlefield[self.__player_team], 1
+        return self.battlefield[self.__enemy_team], 0
+
+    def add_queue(self, queue):
+        self.queue = queue
+
 
 
 class Team:
@@ -43,9 +45,8 @@ class Team:
 
     def remove_character(self, character):
         self.team.remove(character)
-        if self.BattleField_that_owns.check_victory(self.team):
-            return True
-        self.BattleField_that_owns.check_defeat()
+        self.BattleField_that_owns.queue.remove_character(character)
+
 
     def _display_team(self):
         string = ""
@@ -71,10 +72,13 @@ class Character:
         self._continuing_buffs = []
 
     def _remove_health(self, reduced_health):
-        #self.team_that_owns_me.
         self.character._health = reduced_health
         if self.character._health <= 0:
+            self.character._health = 0
             self.team_that_owns_me.remove_character(self)
+
+
+
 
     def __ult_remove_health(self, reduced_health):
         self.character._health = reduced_health
@@ -88,7 +92,7 @@ class Character:
                                                attacking_character_char._buffs, attacking_character_char._debuffs,
                                                self._offense, self._buffs, self._debuffs)
 
-        attacking_character_char._remove_health(reduced_health, Team)
+        attacking_character_char._remove_health(reduced_health)
 
     def special(self, Team: list):
         attacking_character_char = Team.team[self._target]
@@ -99,7 +103,7 @@ class Character:
                                                attacking_character_char._buffs, attacking_character_char._debuffs,
                                                self._offense, self._buffs, self._debuffs, attacking_character.GetTenacity())
 
-        attacking_character_char._remove_health(special_data[0], Team)
+        attacking_character_char._remove_health(special_data[0])
         attacking_character_char._buffs = special_data[1]
         attacking_character_char._debuffs = special_data[2]
         self._buffs = special_data[3]
@@ -107,8 +111,9 @@ class Character:
         self._offense = special_data[5]
         self._continuing_buffs = special_data[6]
 
-    def ultimate(self, Team: list, Battle):
+    def ultimate(self, Team: list):
         attacking_character_char = Team.team
+
 
         for character in attacking_character_char:
             attacking_character = character._get_block()
@@ -119,20 +124,22 @@ class Character:
                                                    character._buffs, character._debuffs,
                                                    self._offense, self._buffs, self._debuffs))
 
-            character.__ult_remove_health(reduced_health, Team)
+            character.__ult_remove_health(reduced_health)
 
         for i in range(len(attacking_character_char)-1, -1, -1):
-            attacking_character_char[i]._remove_health(attacking_character_char[i]._get_block()._health, Team, Battle)
+            attacking_character_char[i]._remove_health(attacking_character_char[i].character._health)
 
 
 
 
     def passive(self, Team2):
-        changes = self.character._passive(self._buffs, self._debuffs, self._offense, self.team_that_owns_me, Team2, self._continuing_buffs)
+        if len(Team2.team) != 0:
 
-        self._buffs = changes[0]
-        self._debuffs = changes[1]
-        self._offense = changes[2]
+            changes = self.character._passive(self._offense, self.team_that_owns_me, Team2, self._continuing_buffs)
+
+            self._buffs = changes[0]
+            self._debuffs = changes[1]
+            self._offense = changes[2]
 
 
 
