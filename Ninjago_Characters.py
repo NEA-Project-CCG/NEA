@@ -6,31 +6,33 @@ from Database_Querying import Database
 
 
 class Kai(Character):
-    def __init__(self, player_id=None, stat_multiplier=None):
+    def __init__(self, player_id: int = None, stat_multiplier: int = None, Battle_id: int = None):
         kai_id = 6
-        stats = Database.Get_stats(kai_id)
+        stats: list[int, str, int, int, int, int, int, int, int, int, int, int, int, int, int] = Database.Get_stats(
+            kai_id)
 
         if player_id is not None:
             stat_multiplier = Multiplier.calculate_stats_player(player_id, kai_id)
 
-        self.name = stats[0][1]
 
+        self.name: str = stats[1]
         stats = stats[2:]
 
-        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
-        self._health = self.__max_health
-        self._damage = round((stats[1] * stat_multiplier) / 100000)
-        self._evasion = round((stats[2] * stat_multiplier) / 100000)
-        self._ap = round((stats[3] * stat_multiplier) / 100000)
-        self._defense = round((stats[4] * stat_multiplier) / 100000)
-        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
-        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
-        self._accuracy = stats[7]
-        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
-        self._speed = round((stats[9] * stat_multiplier) / 100000)
-        self._potency = round((stats[10] * stat_multiplier) / 100000)
-        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
-
+        self.__max_health: int = round((stats[0] * stat_multiplier) / 1972)
+        self._health: int = self.__max_health
+        self._damage: int = round((stats[1] * stat_multiplier) / 1972)
+        self._evasion = round((stats[2] * stat_multiplier) / 1972)
+        self._ap: int = round((stats[3] * stat_multiplier) / 1972)
+        self._defense: int = round((stats[4] * stat_multiplier) / 1972)
+        self._crit_chance: int = round((stats[5] * stat_multiplier) / 1972)
+        self._crit_damage: int = stats[6]
+        self._accuracy: int = stats[7]
+        self._crit_avoidance: int = round((stats[8] * stat_multiplier) / 1972)
+        self._speed: int = stats[9]
+        self._potency: int = round((stats[10] * stat_multiplier) / 1972)
+        self._tenacity: int = round((stats[11] * stat_multiplier) / 1972)
+        self._special_cooldown: int = 0
+        self._ultimate_cooldown: int = 0
 
 
 
@@ -88,6 +90,8 @@ class Kai(Character):
 
         health -= damage
 
+        self._special_cooldown = 2
+
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
@@ -98,6 +102,7 @@ class Kai(Character):
 
         damage = Battle_Calculators.Damage_calculator(self._damage, offense, self._ap, self._crit_chance, self._crit_damage, 100, calc_buffs, calc_debuffs, self._accuracy, crit_avoidance, defense, evasion)
         health -= damage
+        self._ultimate_cooldown = 4
         return health
 
     def _passive(self, offense, Friends, Enemies, kbuffs):
@@ -111,31 +116,33 @@ class Kai(Character):
 
 
 class Zane(Character):
-    def __init__(self, player_id=None, stat_multiplier=None):
+    def __init__(self, player_id: int = None, stat_multiplier: int = None, Battle_id: int = None):
         zane_id = 7
-        stats = Database.Get_stats(zane_id)
+        stats: list[int, str, int, int, int, int, int, int, int, int, int, int, int, int, int] = Database.Get_stats(
+            zane_id)
 
         if player_id is not None:
             stat_multiplier = Multiplier.calculate_stats_player(player_id, zane_id)
 
-        stats = stats[zane_id]
-        self.name = stats[1]
+
+        self.name: str = stats[1]
         stats = stats[2:]
 
-        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
-        self._health = self.__max_health
-        self._damage = round((stats[1] * stat_multiplier) / 100000)
-        self._evasion = round((stats[2] * stat_multiplier) / 100000)
-        self._ap = round((stats[3] * stat_multiplier) / 100000)
-        self._defense = round((stats[4] * stat_multiplier) / 100000)
-        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
-        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
-        self._accuracy = stats[7]
-        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
-        self._speed = round((stats[9] * stat_multiplier) / 100000)
-        self._potency = round((stats[10] * stat_multiplier) / 100000)
-        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
-
+        self.__max_health: int = round((stats[0] * stat_multiplier) / 1972)
+        self._health: int = self.__max_health
+        self._damage: int = round((stats[1] * stat_multiplier) / 1972)
+        self._evasion = round((stats[2] * stat_multiplier) / 1972)
+        self._ap: int = round((stats[3] * stat_multiplier) / 1972)
+        self._defense: int = round((stats[4] * stat_multiplier) / 1972)
+        self._crit_chance: int = round((stats[5] * stat_multiplier) / 1972)
+        self._crit_damage: int = stats[6]
+        self._accuracy: int = stats[7]
+        self._crit_avoidance: int = round((stats[8] * stat_multiplier) / 1972)
+        self._speed: int = stats[9]
+        self._potency: int = round((stats[10] * stat_multiplier) / 1972)
+        self._tenacity: int = round((stats[11] * stat_multiplier) / 1972)
+        self._special_cooldown: int = 0
+        self._ultimate_cooldown: int = 0
 
 
 
@@ -183,9 +190,9 @@ class Zane(Character):
 
         calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
-        cbuffs = Battle_Calculators.Buff_calculator(calc_buffs_and_debuffs[0], [4])
+        cbuffs = Battle_Calculators.Buff_calculator(calc_buffs_and_debuffs[0], ["offense up"])
 
-        new_buffs = [4]
+        new_buffs = []
 
         calc_buffs_and_debuffs = Battle_Calculators.resolve_damage_buffs(buffs, debuffs, cbuffs, cdebuffs)
 
@@ -197,6 +204,8 @@ class Zane(Character):
 
         health -= damage
 
+        self._special_cooldown = 2
+
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
@@ -207,9 +216,10 @@ class Zane(Character):
 
         damage = Battle_Calculators.Damage_calculator(self._damage, offense, self._ap, self._crit_chance, self._crit_damage, 50, calc_buffs, calc_debuffs, self._accuracy, crit_avoidance, defense, evasion)
         health -= damage
+        self._ultimate_cooldown = 4
         return health
 
-    def _passive(self, debuffs, offense, Friends, Enemies, kbuffs):
+    def _passive(self,offense, Friends, Enemies, kbuffs):
         buffs = kbuffs
         debuffs = []
         self._ap += round(self._ap / 10)
@@ -217,30 +227,33 @@ class Zane(Character):
 
 
 class Cole(Character):
-    def __init__(self, player_id=None, stat_multiplier=None):
+    def __init__(self, player_id: int = None, stat_multiplier: int = None, Battle_id: int = None):
         cole_id = 8
-        stats = Database.Get_stats(cole_id)
+        stats: list[int, str, int, int, int, int, int, int, int, int, int, int, int, int, int] = Database.Get_stats(
+            cole_id)
 
         if player_id is not None:
             stat_multiplier = Multiplier.calculate_stats_player(player_id, cole_id)
 
-        self.name = stats[1]
+
+        self.name: str = stats[1]
         stats = stats[2:]
 
-        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
-        self._health = self.__max_health
-        self._damage = round((stats[1] * stat_multiplier) / 100000)
-        self._evasion = round((stats[2] * stat_multiplier) / 100000)
-        self._ap = round((stats[3] * stat_multiplier) / 100000)
-        self._defense = round((stats[4] * stat_multiplier) / 100000)
-        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
-        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
-        self._accuracy = stats[7]
-        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
-        self._speed = round((stats[9] * stat_multiplier) / 100000)
-        self._potency = round((stats[10] * stat_multiplier) / 100000)
-        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
-
+        self.__max_health: int = round((stats[0] * stat_multiplier) / 1972)
+        self._health: int = self.__max_health
+        self._damage: int = round((stats[1] * stat_multiplier) / 1972)
+        self._evasion = round((stats[2] * stat_multiplier) / 1972)
+        self._ap: int = round((stats[3] * stat_multiplier) / 1972)
+        self._defense: int = round((stats[4] * stat_multiplier) / 1972)
+        self._crit_chance: int = round((stats[5] * stat_multiplier) / 1972)
+        self._crit_damage: int = stats[6]
+        self._accuracy: int = stats[7]
+        self._crit_avoidance: int = round((stats[8] * stat_multiplier) / 1972)
+        self._speed: int = stats[9]
+        self._potency: int = round((stats[10] * stat_multiplier) / 1972)
+        self._tenacity: int = round((stats[11] * stat_multiplier) / 1972)
+        self._special_cooldown: int = 0
+        self._ultimate_cooldown: int = 0
 
 
     def GetHealth(self):
@@ -311,6 +324,8 @@ class Cole(Character):
 
         health -= damage
 
+        self._special_cooldown = 2
+
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
@@ -323,6 +338,7 @@ class Cole(Character):
                                                       self._crit_damage, 40, calc_buffs, calc_debuffs, self._accuracy,
                                                       crit_avoidance, defense, evasion)
         health -= damage
+        self._ultimate_cooldown = 4
         return health
 
     def _passive(self, offense, Friends, Enemies, kbuffs):
@@ -333,29 +349,33 @@ class Cole(Character):
 
 
 class Jay(Character):
-    def __init__(self, player_id=None, stat_multiplier=None):
+    def __init__(self, player_id: int = None, stat_multiplier: int = None, Battle_id: int = None):
         jay_id = 9
-        stats = Database.Get_stats(jay_id)
+        stats: list[int, str, int, int, int, int, int, int, int, int, int, int, int, int, int] = Database.Get_stats(
+            jay_id)
 
         if player_id is not None:
             stat_multiplier = Multiplier.calculate_stats_player(player_id, jay_id)
 
-        self.name = stats[1]
+
+        self.name: str = stats[1]
         stats = stats[2:]
 
-        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
-        self._health = self.__max_health
-        self._damage = round((stats[1] * stat_multiplier) / 100000)
-        self._evasion = round((stats[2] * stat_multiplier) / 100000)
-        self._ap = round((stats[3] * stat_multiplier) / 100000)
-        self._defense = round((stats[4] * stat_multiplier) / 100000)
-        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
-        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
-        self._accuracy = stats[7]
-        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
-        self._speed = round((stats[9] * stat_multiplier) / 100000)
-        self._potency = round((stats[10] * stat_multiplier) / 100000)
-        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
+        self.__max_health: int = round((stats[0] * stat_multiplier) / 1972)
+        self._health: int = self.__max_health
+        self._damage: int = round((stats[1] * stat_multiplier) / 1972)
+        self._evasion = round((stats[2] * stat_multiplier) / 1972)
+        self._ap: int = round((stats[3] * stat_multiplier) / 1972)
+        self._defense: int = round((stats[4] * stat_multiplier) / 1972)
+        self._crit_chance: int = round((stats[5] * stat_multiplier) / 1972)
+        self._crit_damage: int = stats[6]
+        self._accuracy: int = stats[7]
+        self._crit_avoidance: int = round((stats[8] * stat_multiplier) / 1972)
+        self._speed: int = stats[9]
+        self._potency: int = round((stats[10] * stat_multiplier) / 1972)
+        self._tenacity: int = round((stats[11] * stat_multiplier) / 1972)
+        self._special_cooldown: int = 0
+        self._ultimate_cooldown: int = 0
 
 
     def GetHealth(self):
@@ -424,6 +444,8 @@ class Jay(Character):
 
         health -= damage
 
+        self._special_cooldown = 2
+
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
@@ -436,6 +458,7 @@ class Jay(Character):
                                                       self._crit_damage, 50, calc_buffs, calc_debuffs, self._accuracy,
                                                       crit_avoidance, defense, evasion)
         health -= damage
+        self._ultimate_cooldown = 4
         return health
 
     def _passive(self, offense, Friends, Enemies, kbuffs):
@@ -445,30 +468,33 @@ class Jay(Character):
         return [buffs, debuffs, offense]
 
 class Lloyd(Character):
-    def __init__(self, player_id=None, stat_multiplier=None):
+    def __init__(self, player_id: int = None, stat_multiplier: int = None, Battle_id: int = None):
         lloyd_id = 10
-        stats = Database.Get_stats(lloyd_id)
+        stats: list[int, str, int, int, int, int, int, int, int, int, int, int, int, int, int] = Database.Get_stats(
+            lloyd_id)
 
         if player_id is not None:
             stat_multiplier = Multiplier.calculate_stats_player(player_id, lloyd_id)
 
 
-        self.name = stats[1]
+        self.name: str = stats[1]
         stats = stats[2:]
 
-        self.__max_health = round((stats[0] * stat_multiplier) / 100000)
-        self._health = self.__max_health
-        self._damage = round((stats[1] * stat_multiplier) / 100000)
-        self._evasion = round((stats[2] * stat_multiplier) / 100000)
-        self._ap = round((stats[3] * stat_multiplier) / 100000)
-        self._defense = round((stats[4] * stat_multiplier) / 100000)
-        self._crit_chance = round((stats[5] * stat_multiplier) / 100000)
-        self._crit_damage = round((stats[6] * stat_multiplier) / 100000)
-        self._accuracy = stats[7]
-        self._crit_avoidance = round((stats[8] * stat_multiplier) / 100000)
-        self._speed = round((stats[9] * stat_multiplier) / 100000)
-        self._potency = round((stats[10] * stat_multiplier) / 100000)
-        self._tenacity = round((stats[11] * stat_multiplier) / 100000)
+        self.__max_health: int = round((stats[0] * stat_multiplier) / 1972)
+        self._health: int = self.__max_health
+        self._damage: int = round((stats[1] * stat_multiplier) / 1972)
+        self._evasion = round((stats[2] * stat_multiplier) / 1972)
+        self._ap: int = round((stats[3] * stat_multiplier) / 1972)
+        self._defense: int = round((stats[4] * stat_multiplier) / 1972)
+        self._crit_chance: int = round((stats[5] * stat_multiplier) / 1972)
+        self._crit_damage: int = stats[6]
+        self._accuracy: int = stats[7]
+        self._crit_avoidance: int = round((stats[8] * stat_multiplier) / 1972)
+        self._speed: int = stats[9]
+        self._potency: int = round((stats[10] * stat_multiplier) / 1972)
+        self._tenacity: int = round((stats[11] * stat_multiplier) / 1972)
+        self._special_cooldown: int = 0
+        self._ultimate_cooldown: int = 0
 
 
     def GetHealth(self):
@@ -541,6 +567,8 @@ class Lloyd(Character):
 
         health -= damage
 
+        self._special_cooldown = 2
+
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
@@ -553,46 +581,50 @@ class Lloyd(Character):
                                                       self._crit_damage, 100, calc_buffs, calc_debuffs, self._accuracy,
                                                       crit_avoidance, defense, evasion)
         health -= damage
+        self._ultimate_cooldown = 4
         return health
 
     def _passive(self, offense, Friends, Enemies, kbuffs):
         buffs = kbuffs
         debuffs = []
 
-        targ = randint(0, len(Enemies.team)-1)
-
-        for i in range(len(Enemies.team)-1, -1, -1):
-            if i == targ:
-                Enemies.team.targ._health -= Enemies.team.targ._remove_health(round(self.__max_health / 10))
+        target_pos = randint(0, len(Enemies.team) - 1)
+        target = Enemies.team[target_pos]
+        target_stats = target._get_block()
+        target_stats._health -= round(target_stats._health / 10)
 
 
         return [buffs, debuffs, offense]
 
 
 class Wu(Character):
-    def __init__(self, player_id=None, stat_multiplier=None):
+    def __init__(self, player_id: int = None, stat_multiplier: int = None, Battle_id: int = None):
         wu_id = 11
-        stats = Database.Get_stats(wu_id)
+        stats: list[int, str, int, int, int, int, int, int, int, int, int, int, int, int, int] = Database.Get_stats(
+            wu_id)
 
         if player_id is not None:
             stat_multiplier = Multiplier.calculate_stats_player(player_id, wu_id)
 
-        self.name = stats[1]
+
+        self.name: str = stats[1]
         stats = stats[2:]
 
-        self.__max_health = round((stats[0] * stat_multiplier)/100000)
-        self._health = self.__max_health
-        self._damage = round((stats[1] * stat_multiplier)/100000)
-        self._evasion = round((stats[2] * stat_multiplier)/100000)
-        self._ap = round((stats[3] * stat_multiplier)/100000)
-        self._defense = round((stats[4] * stat_multiplier)/100000)
-        self._crit_chance = round((stats[5] * stat_multiplier)/100000)
-        self._crit_damage = round((stats[6] * stat_multiplier)/100000)
-        self._accuracy = stats[7]
-        self._crit_avoidance = round((stats[8] * stat_multiplier)/100000)
-        self._speed = round((stats[9] * stat_multiplier)/100000)
-        self._potency = round((stats[10] * stat_multiplier)/100000)
-        self._tenacity = round((stats[11] * stat_multiplier)/100000)
+        self.__max_health: int = round((stats[0] * stat_multiplier) / 1972)
+        self._health: int = self.__max_health
+        self._damage: int = round((stats[1] * stat_multiplier) / 1972)
+        self._evasion = round((stats[2] * stat_multiplier) / 1972)
+        self._ap: int = round((stats[3] * stat_multiplier) / 1972)
+        self._defense: int = round((stats[4] * stat_multiplier) / 1972)
+        self._crit_chance: int = round((stats[5] * stat_multiplier) / 1972)
+        self._crit_damage: int = stats[6]
+        self._accuracy: int = stats[7]
+        self._crit_avoidance: int = round((stats[8] * stat_multiplier) / 1972)
+        self._speed: int = stats[9]
+        self._potency: int = round((stats[10] * stat_multiplier) / 1972)
+        self._tenacity: int = round((stats[11] * stat_multiplier) / 1972)
+        self._special_cooldown: int = 0
+        self._ultimate_cooldown: int = 0
 
 
     def GetHealth(self):
@@ -662,6 +694,8 @@ class Wu(Character):
 
         health -= damage
 
+        self._special_cooldown = 2
+
         return [health, buffs, debuffs, cbuffs, cdebuffs, offense, new_buffs]
 
     def _ultimate(self, defense, evasion, crit_avoidance, health, buffs, debuffs, offense, cbuffs, cdebuffs):
@@ -676,6 +710,7 @@ class Wu(Character):
                                                       self._crit_damage, 150, calc_buffs, calc_debuffs, self._accuracy,
                                                       crit_avoidance, defense, evasion)
         health -= damage
+        self._ultimate_cooldown = 4
         return health
 
     def _passive(self, offense, Friends, Enemies, kbuffs):
