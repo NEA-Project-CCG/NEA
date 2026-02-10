@@ -11,7 +11,7 @@ class Multiplier:
         multiplier_g = Multiplier.gear_multiplier(gear)
         multiplier_s = Multiplier.star_multiplier(star)
 
-        total_m = (multiplier_l * multiplier_g * multiplier_s)
+        total_m = ((2*multiplier_l) +(4*multiplier_g) + (4*multiplier_s))
 
         return total_m
 
@@ -35,6 +35,7 @@ class Multiplier:
         
     @staticmethod
     def level_multiplier(level):
+
         level_m = level
 
 
@@ -53,7 +54,6 @@ class Multiplier:
     @staticmethod
     def EXP_Calculator(Chapter, Stage):
         exp1 = Stage * 100
-        exp2 = (Chapter**Chapter) * 100
+        exp2 = (Chapter ** Chapter) * 100
         total_exp = exp1 + exp2
         return total_exp
-
