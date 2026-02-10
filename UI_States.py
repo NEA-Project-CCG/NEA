@@ -16,7 +16,7 @@ class ui_states:
             ui_states.__state_characters_back(window, player_id)
 
         elif state == "journey guide":
-            ui_states.__state_journey_guide(window)
+            ui_states.__state_journey_guide(window, font)
 
         elif state == "campaigns":
             ui_states.__state_campaigns(window, font)
@@ -29,6 +29,9 @@ class ui_states:
                 ui_states.__state_campaign_chapter_2(window, font)
             elif state[chapter_index] == "3":
                 ui_states.__state_campaign_chapter_3(window, font)
+
+        elif state in ["Laval_J", "Wu_J", "Doom_J", "Maul_J"]:
+            ui_states.__state_journey_guide_base(window, font, state)
 
         else:
             ui_states.__Character_state(player_id, state, window)
@@ -113,10 +116,11 @@ class ui_states:
 
     @staticmethod
     def __State_Characters(window, player_id):
-        font = pygame.font.Font(pygame.font.get_default_font(), 20)
         names = Database.names_in_collected(player_id)
         j = 6
         for i in range(len(names)):
+            f_size = round(150//(len(names[i][0]) + 1))
+            font = pygame.font.Font(pygame.font.get_default_font(), f_size)
             pygame.draw.rect(window, (255*(1-names[i][1]), 255*(names[i][1]), 0), pygame.Rect(20 + (130*(i%j)), 50 + 80*(i//j), 100, 60))
             text = names[i][0]
             text = font.render(text, True, (255, 255, 255))
@@ -127,11 +131,78 @@ class ui_states:
 
     #Journey Guide screen
     @staticmethod
-    def __state_journey_guide(window):
+    def __state_journey_guide(window, font):
         window.fill((255, 0, 0))
         pygame.draw.rect(window, (41, 103, 204), pygame.Rect(10, 10, 30, 30))
 
+        pygame.draw.rect(window, (0, 255, 0), pygame.Rect(20, 60, 100, 480))
+        text = "Laval"
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (25, 430))
+
+        pygame.draw.rect(window, (0, 255, 0), pygame.Rect(130, 60, 100, 480))
+        text = "Wu"
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (135, 430))
+
+        font = pygame.font.Font(pygame.font.get_default_font(), 32)
+
+        pygame.draw.rect(window, (0, 255, 0), pygame.Rect(240, 60, 100, 480))
+        text = "Doom"
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (245, 430))
+
+        font = pygame.font.Font(pygame.font.get_default_font(), 35)
+
+        pygame.draw.rect(window, (0, 255, 0), pygame.Rect(350, 60, 100, 480))
+        text = "Maul"
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (355, 430))
+
+        font = pygame.font.Font(pygame.font.get_default_font(), 15)
+
+        pygame.draw.rect(window, (0, 255, 0), pygame.Rect(460, 60, 100, 480))
+        text = "Superman"
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (465, 430))
+
+        font = pygame.font.Font(pygame.font.get_default_font(), 20)
+
+        pygame.draw.rect(window, (0, 255, 0), pygame.Rect(570, 60, 100, 480))
+        text = "Gandalf"
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (575, 430))
+
+        pygame.draw.rect(window, (0, 255, 0), pygame.Rect(680, 60, 100, 480))
+        text = "Clutch"
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (685, 430))
+
         return window
+
+    @staticmethod
+    def __state_journey_guide_base(window, font, state):
+        window.fill((7, 34, 166))
+
+        # Draws back button
+        pygame.draw.rect(window, (41, 103, 204), pygame.Rect(10, 10, 30, 30))
+
+        y = 325
+        x = 55
+
+        for i in range(6):
+            pygame.draw.rect(window, (41, 255, 20), pygame.Rect(x + (120*i), y, 40, 40))
+            text = str(i + 1)
+            text = font.render(text, True, (255, 255, 255))
+            window.blit(text, (x + (120*i), y))
+
+        new_text = state.split("_")
+        text = new_text[0]
+        font = pygame.font.Font(pygame.font.get_default_font(), round(250/len(text)))
+
+        text = font.render(text, True, (255, 255, 255))
+        window.blit(text, (280, 200))
+
 
     #Campaigns screen
     @staticmethod
@@ -161,12 +232,11 @@ class ui_states:
 
         for i in range(10):
             # draws campaign nodes
-            pygame.draw.rect(window, (41, 255, 20), pygame.Rect(pos_x, pos_y[i%2], 40, 40))
+            pygame.draw.rect(window, (41, 255, 20), pygame.Rect((70*i) + pos_x, pos_y[i%2], 40, 40))
             text = str(i + 1)
             text = font.render(text, True, (255, 255, 255))
-            window.blit(text, (pos_x, pos_y[i%2]))
+            window.blit(text, (pos_x + (70 * i), pos_y[i%2]))
 
-            pos_x += 70
 
         for i in range(3):
             pygame.draw.rect(window, (255, 255, 125), pygame.Rect((270*i), 50, 260, 50))
@@ -222,7 +292,7 @@ class ui_states:
             text = font.render(text, True, (255, 255, 255))
             window.blit(text, (30 + (150*i), 400))
 
-            text = str(character.GetSpeed())
+            text = str(character.GetHealth())
             text = font.render(text, True, (255, 255, 255))
             window.blit(text, (30 + (150*i), 430))
 
@@ -255,7 +325,6 @@ class ui_states:
             window.blit(text, (30 + (150 * j), 130))
 
             j +=1
-
 
 
 
