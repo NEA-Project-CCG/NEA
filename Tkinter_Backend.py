@@ -49,13 +49,9 @@ class Tkinter_Backend():
     def Player_chars(names):
         root = Tk()
         button_dict, root = Tkinter_Backend.Character_selection_screen_setup(names, root)
-        print("DEBUG: 1")
         Tkinter_Backend.Button_functionality(button_dict, root)
-        print("DEBUG: 2")
         Tkinter_Backend.loop(root)
-        print("DEBUG: 3")
-        
-        print(f"DEBUG: {c_id}, {char_name}")
+
         return c_id, char_name
 
         
