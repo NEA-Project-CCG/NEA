@@ -1,8 +1,12 @@
-import Gameloop
+from Gameloop import Gameloop
+from Login import safety_login
+
 
 def main():
-    #Login.login()
-    Gameloop.gameloop()
+    login = safety_login()
+    login.begin()
+    Gameloop.gameloop(login.Player_id)
+
 
 if __name__ == '__main__':
     main()
