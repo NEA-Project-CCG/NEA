@@ -18,10 +18,10 @@ class Journeys:
 
         if Valid < 0:
             return False
-
+        Database.reqs_completed(Journey_id, Player_id)
 
     @staticmethod
-    def start_battle(battle_id, player_id):
+    def start_battle(battle_id, player_id, Journey_id):
         Campaign_chars = Database.Get_Campaign_Chars(battle_id)
 
         Enemy_level, Enemy_gear, Enemy_star = Database.Get_Multiplier_levels(battle_id)
@@ -30,17 +30,17 @@ class Journeys:
 
         CharDict: dict[Character] = {}
         for i in range(5):
-            CharDict["EChar" + str(i + 1)] = Campaign_Logic.__init_Echar(Campaign_chars[i], multiplier)
+            CharDict["EChar" + str(i + 1)] = Campaign_Logic.init_Echar(Campaign_chars[i], multiplier)
 
-        chars = Journeys.PChars(player_id)
+        chars = Journeys.PChars(player_id, Journey_id)
         for i in range(5):
-            CharDict["PChar" + str(i + 1)] = Campaign_Logic.__init_Pchar(chars[i], player_id)
+            CharDict["PChar" + str(i + 1)] = Campaign_Logic.init_Pchar(chars[i], player_id)
 
         return CharDict
 
     @staticmethod
-    def PChars(player_id):
-        reqs = Database.return_Journey_reqs(player_id)
+    def PChars(player_id, Journey_id):
+        reqs = Database.return_Journey_reqs(Journey_id)
         chars = []
         for i in range(5):
             chars.append(reqs[i])
@@ -56,5 +56,10 @@ class Journeys:
 
 
     @staticmethod
-    def end_battle(battle_id, player_id):
+    def end_battle(battle_id, player_id, journey_id):
+        stage = Database.Stage_from_id(battle_id)
+        Database.Unlock_next_journey(player_id, battle_id)
+        if stage == 5:
+            Journeys.Journey_rewards(player_id, journey_id)
+
 
