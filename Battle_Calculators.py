@@ -1,3 +1,4 @@
+
 from random import randint
 
 #all of the parameters for damage calculation
@@ -180,6 +181,7 @@ class Battle_Calculators:
             hit_chance = 0
         hit_rand = 100 if testing else randint(0, 100)
         if hit_chance < hit_rand:
+            print("miss")
             damage = 0
             return damage
 
@@ -269,6 +271,7 @@ class Battle_Calculators:
         rand_acc = randint(0, 100)
         #checks whether it is a hit
         if calc_acc < rand_acc:
+            print("miss")
             return rdebuffs
 
 
