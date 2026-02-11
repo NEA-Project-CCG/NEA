@@ -30,7 +30,7 @@ class ui_states:
             elif state[chapter_index] == "3":
                 ui_states.__state_campaign_chapter_3(window, font)
 
-        elif state in ["Laval_J", "Wu_J", "Doom_J", "Maul_J"]:
+        elif state in ["Laval_J", "Wu_J", "Doom_J", "Maul_J", "Superman_J", "Gandalf_J", "Clutch_J"]:
             ui_states.__state_journey_guide_base(window, font, state)
 
         else:
@@ -325,6 +325,7 @@ class ui_states:
             window.blit(text, (30 + (150 * j), 130))
 
             j +=1
+
 
 
 
