@@ -61,6 +61,21 @@ class Gameloop:
                                 Journeys.check_eligibility(Player_id, journey_id)
                                 comp, Battle_id = Campaign_Logic.Check_stage(journey_id, 1, state[len(state) - 1],
                                                                              Player_id)
+                            elif state[0] == "S":
+                                journey_id = 6
+                                Journeys.check_eligibility(Player_id, journey_id)
+                                comp, Battle_id = Campaign_Logic.Check_stage(journey_id, 1, state[len(state) - 1],
+                                                                             Player_id)
+                            elif state[0] == "G":
+                                journey_id = 7
+                                Journeys.check_eligibility(Player_id, journey_id)
+                                comp, Battle_id = Campaign_Logic.Check_stage(journey_id, 1, state[len(state) - 1],
+                                                                             Player_id)
+                            elif state[0] == "C":
+                                journey_id = 8
+                                Journeys.check_eligibility(Player_id, journey_id)
+                                comp, Battle_id = Campaign_Logic.Check_stage(journey_id, 1, state[len(state) - 1],
+                                                                             Player_id)
                             if comp:
                                 Characters = Journeys.start_battle(Battle_id, Player_id, journey_id)
                                 Journey = True
@@ -108,4 +123,5 @@ class Gameloop:
         
 if __name__ == '__main__':
     Gameloop.gameloop(0)
+
 
